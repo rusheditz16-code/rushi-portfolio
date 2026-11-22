@@ -17,6 +17,23 @@
       subtitle: 'Kinetic Artificial Intelligence Responsive Operating System',
       image: 'assets/projects/kairos-hud.png',
       alt: 'K.A.I.R.O.S. desktop HUD showing CPU and RAM gauges, audio visualizer, and chat console',
+      demoSlides: [
+        {
+          src: 'assets/projects/kairos-hud.png',
+          title: '01 · Neural Arc Reactor & Voice Console',
+          desc: 'Direct microphone bridge via Groq Whisper v3 Turbo (~150ms), live hardware gauges, and quick Windows shortcuts.'
+        },
+        {
+          src: 'assets/projects/kairos-hud-2.png',
+          title: '02 · 24/7 Always-On Wake Word Mode',
+          desc: 'Listens locally for "Hey Kairos" across any app with live active process tracking and dual-wave audio visualizer.'
+        },
+        {
+          src: 'assets/projects/kairos-hud-3.png',
+          title: '03 · Cloudflare Remote Tunnel + Live Tool Execution',
+          desc: 'Remote phone tunnel active alongside sandboxed OPEN_URL and workspace command execution.'
+        }
+      ],
       meta: [
         { label: 'Stack', value: 'FastAPI, WebSockets, React 19' },
         { label: 'Voice', value: 'Groq Whisper Large v3 Turbo (~150ms)' },
@@ -345,6 +362,14 @@
     el.close();
   }
 
+  var demoTimer = null;
+  function stopDemoTimer() {
+    if (demoTimer) {
+      clearInterval(demoTimer);
+      demoTimer = null;
+    }
+  }
+
   if (dialog) {
     dialog.addEventListener('cancel', function (e) {
       e.preventDefault();
@@ -352,6 +377,7 @@
     });
 
     dialog.addEventListener('close', function () {
+      stopDemoTimer();
       dialog.returnValue = '';
       dialog.removeAttribute('data-closing');
     });
@@ -377,8 +403,66 @@
     }
   }
 
+  function wireDemoPlayer(slides) {
+    stopDemoTimer();
+    var imgEl = modalBody.querySelector('[data-demo-img]');
+    var titleEl = modalBody.querySelector('[data-demo-title]');
+    var descEl = modalBody.querySelector('[data-demo-desc]');
+    var dots = Array.prototype.slice.call(modalBody.querySelectorAll('[data-demo-dot]'));
+    var prevBtn = modalBody.querySelector('[data-demo-prev]');
+    var nextBtn = modalBody.querySelector('[data-demo-next]');
+    var playBtn = modalBody.querySelector('[data-demo-toggle]');
+    if (!imgEl || !slides || !slides.length) return;
+
+    var idx = 0;
+    var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var playing = !reduced;
+
+    function show(n) {
+      idx = (n + slides.length) % slides.length;
+      var s = slides[idx];
+      imgEl.src = s.src;
+      imgEl.alt = s.title + ': ' + s.desc;
+      if (titleEl) titleEl.textContent = s.title;
+      if (descEl) descEl.textContent = s.desc;
+      dots.forEach(function (d, di) {
+        d.classList.toggle('is-active', di === idx);
+        d.setAttribute('aria-current', di === idx ? 'true' : 'false');
+      });
+    }
+
+    function syncPlayBtn() {
+      if (playBtn) playBtn.textContent = playing ? 'Pause Demo' : 'Play Demo';
+    }
+
+    function startLoop() {
+      stopDemoTimer();
+      if (playing) {
+        demoTimer = setInterval(function () { show(idx + 1); }, 3400);
+      }
+    }
+
+    if (prevBtn) prevBtn.addEventListener('click', function () { show(idx - 1); startLoop(); });
+    if (nextBtn) nextBtn.addEventListener('click', function () { show(idx + 1); startLoop(); });
+    dots.forEach(function (d, di) {
+      d.addEventListener('click', function () { show(di); startLoop(); });
+    });
+    if (playBtn) {
+      playBtn.addEventListener('click', function () {
+        playing = !playing;
+        syncPlayBtn();
+        startLoop();
+      });
+    }
+
+    show(0);
+    syncPlayBtn();
+    startLoop();
+  }
+
   function openDetail(item) {
     if (!dialog || !item) return;
+    stopDemoTimer();
     modalKicker.textContent = item.kicker || '';
     modalTitle.textContent = item.title || '';
 
@@ -386,11 +470,31 @@
     if (item.subtitle) {
       html += '<p style="font-weight:600;font-size:17px;color:var(--accent);">' + item.subtitle + '</p>';
     }
-    if (item.image) {
+    if (item.demoSlides && item.demoSlides.length) {
+      var first = item.demoSlides[0];
+      html += '<div class="demo-player">' +
+        '<div class="demo-player__stage">' +
+        '<img data-demo-img src="' + first.src + '" alt="' + first.title + '">' +
+        '<div class="demo-player__caption"><strong data-demo-title>' + first.title + '</strong><span data-demo-desc>' + first.desc + '</span></div>' +
+        '</div>' +
+        '<div class="demo-player__bar">' +
+        '<div class="demo-player__dots">' +
+        item.demoSlides.map(function (s, i) {
+          return '<button type="button" class="demo-dot' + (i === 0 ? ' is-active' : '') + '" data-demo-dot aria-label="Show slide ' + (i + 1) + '"></button>';
+        }).join('') +
+        '</div>' +
+        '<div class="demo-player__btns">' +
+        '<button type="button" class="pill-btn" data-demo-prev>← Prev</button>' +
+        '<button type="button" class="pill-btn" data-demo-toggle>Pause Demo</button>' +
+        '<button type="button" class="pill-btn" data-demo-next>Next →</button>' +
+        '</div>' +
+        '</div>' +
+        '</div>';
+    } else if (item.image) {
       html += '<div class="dialog__hero"><img src="' + item.image + '" alt="' + (item.alt || item.title) + '"></div>';
     }
     if (item.summary) {
-      html += '<p style="line-height:1.65;color:rgba(244,243,238,0.88);">' + item.summary + '</p>';
+      html += '<p style="line-height:1.65;color:rgba(238,247,242,0.88);">' + item.summary + '</p>';
     }
     if (item.meta && item.meta.length) {
       html += '<div class="dialog__meta-grid">';
@@ -416,6 +520,7 @@
     }
 
     modalBody.innerHTML = html;
+    if (item.demoSlides && item.demoSlides.length) wireDemoPlayer(item.demoSlides);
     dialog.removeAttribute('data-closing');
     dialog.showModal();
   }
@@ -557,20 +662,73 @@
         return;
       }
       e.preventDefault();
+
+      // Honeypot check against bots
+      if (contactForm.elements._honey && contactForm.elements._honey.value) {
+        return;
+      }
+
       var nameVal = contactForm.elements.name.value.trim();
       var emailVal = contactForm.elements.email.value.trim();
       var msgVal = contactForm.elements.message.value.trim();
+      var submitBtn = contactForm.querySelector('[data-submit-btn]');
 
       var subject = encodeURIComponent('Portfolio Inquiry from ' + nameVal);
-      var body = encodeURIComponent('Hi Rushi,\n\n' + msgVal + '\n\n— ' + nameVal + ' (' + emailVal + ')');
+      var body = encodeURIComponent('Hi Rushi,\n\n' + msgVal + '\n\nFrom: ' + nameVal + ' (' + emailVal + ')');
       var mailtoHref = 'mailto:rushirajdabhi16@gmail.com?subject=' + subject + '&body=' + body;
 
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Sending...';
+      }
       if (formStatus) {
         formStatus.hidden = false;
-        formStatus.innerHTML = 'Message prepared for <strong>rushirajdabhi16@gmail.com</strong>. <a href="' + mailtoHref + '" style="text-decoration:underline;color:#ffffff;font-weight:700;">Open in Email App ↗</a>';
+        formStatus.textContent = 'Sending your message to Rushi...';
       }
-      announcer.textContent = 'Message prepared for rushirajdabhi16@gmail.com.';
-      window.location.href = mailtoHref;
+
+      fetch('https://formsubmit.co/ajax/rushirajdabhi16@gmail.com', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          name: nameVal,
+          email: emailVal,
+          message: msgVal,
+          _subject: 'New Portfolio Message from ' + nameVal,
+          _template: 'table'
+        })
+      })
+        .then(function (res) {
+          if (!res.ok) throw new Error('HTTP ' + res.status);
+          return res.json();
+        })
+        .then(function () {
+          if (formStatus) {
+            formStatus.hidden = false;
+            formStatus.innerHTML = 'Message sent directly to <strong>rushirajdabhi16@gmail.com</strong>. Thanks for reaching out!';
+          }
+          announcer.textContent = 'Message sent directly to Rushi.';
+          contactForm.reset();
+          contactForm.querySelectorAll('input, textarea').forEach(function (el) {
+            el.classList.remove('user-invalid-fallback', 'user-valid-fallback');
+            syncField(el, false);
+          });
+        })
+        .catch(function () {
+          if (formStatus) {
+            formStatus.hidden = false;
+            formStatus.innerHTML = 'Could not reach form server right now. <a href="' + mailtoHref + '" style="text-decoration:underline;color:#ffffff;font-weight:700;">Send via Email App ↗</a>';
+          }
+          announcer.textContent = 'Form server unreachable. Use the email app link to send your message.';
+        })
+        .finally(function () {
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Send Message →';
+          }
+        });
     });
   }
 })();

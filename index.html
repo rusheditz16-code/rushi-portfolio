@@ -7,9 +7,21 @@
   <meta name="description" content="Personal portfolio of Rushi (Dabhi Rushiraj Jayeshbhai), a B.Tech CSE (AI &amp; ML) student at Gyanmanjari Innovative University building web apps, civic tools, and desktop software.">
   <meta name="author" content="Dabhi Rushiraj Jayeshbhai">
   <meta name="theme-color" content="#050a08">
+  <link rel="canonical" href="https://rushi16.vercel.app/">
   <meta property="og:type" content="profile">
+  <meta property="og:url" content="https://rushi16.vercel.app/">
+  <meta property="og:site_name" content="RUSHI.BUILD">
   <meta property="og:title" content="Rushi | Full-Stack &amp; AI Developer">
   <meta property="og:description" content="1st-year CS (AI &amp; ML) student in Bhavnagar building practical web apps, civic safety tools, and desktop software.">
+  <meta property="og:image" content="https://rushi16.vercel.app/assets/og-preview.png">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Rushi | Full-Stack &amp; AI Developer Portfolio Preview">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Rushi | Full-Stack &amp; AI Developer">
+  <meta name="twitter:description" content="1st-year CS (AI &amp; ML) student in Bhavnagar building practical web apps, civic safety tools, and desktop software.">
+  <meta name="twitter:image" content="https://rushi16.vercel.app/assets/og-preview.png">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -403,7 +415,7 @@
                   <span class="tag">PyWebView HUD</span>
                 </div>
                 <div class="project-card__actions">
-                  <button type="button" class="btn btn--primary" data-open-project="kairos">View Details</button>
+                  <button type="button" class="btn btn--primary" data-open-project="kairos">Watch HUD Demo ▷</button>
                   <a class="btn btn--ghost" href="https://github.com/rusheditz16-code" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
                 </div>
               </div>
@@ -594,6 +606,7 @@
             <p class="contact-form-card__sub">Have a project idea, hackathon team, or internship role? Send me a quick message here.</p>
 
             <form class="contact-form" id="contact-form" novalidate>
+              <input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" style="display:none">
               <div class="field">
                 <label for="contact-name">Your Name</label>
                 <span id="name-hint" class="hint">At least 2 characters</span>
@@ -645,7 +658,7 @@
                 </div>
               </div>
 
-              <button type="submit" class="btn btn--primary">Send Message →</button>
+              <button type="submit" class="btn btn--primary" data-submit-btn>Send Message →</button>
               <div id="form-status" class="form-status" hidden></div>
             </form>
           </div>

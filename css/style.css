@@ -1746,6 +1746,92 @@ dialog.detail-dialog::backdrop {
   object-position: top center;
 }
 
+.demo-player {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.demo-player__stage {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(16, 185, 129, 0.35);
+  background: #050a08;
+  aspect-ratio: 16 / 9;
+}
+
+.demo-player__stage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: opacity 0.25s ease;
+}
+
+.demo-player__caption {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 12px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: rgba(5, 10, 8, 0.88);
+  border: 1px solid rgba(16, 185, 129, 0.32);
+  backdrop-filter: blur(8px);
+}
+
+.demo-player__caption strong {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--accent-hot);
+  margin-bottom: 2px;
+}
+
+.demo-player__caption span {
+  font-size: 13px;
+  color: var(--paper);
+}
+
+.demo-player__bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.demo-player__dots {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.demo-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(238, 247, 242, 0.25);
+  transition: width 0.25s var(--ease-out), background-color 0.2s ease;
+}
+
+.demo-dot.is-active {
+  width: 26px;
+  background: var(--accent);
+}
+
+.demo-player__btns {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn[disabled] {
+  opacity: 0.65;
+  cursor: wait;
+}
+
 .dialog__meta-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
