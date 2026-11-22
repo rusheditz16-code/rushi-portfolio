@@ -570,10 +570,22 @@ button {
   position: absolute;
   inset: 10% 10% 8%;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(16, 185, 129, 0.24) 0%, rgba(52, 211, 153, 0.08) 45%, transparent 72%);
-  filter: blur(32px);
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.22) 0%, rgba(52, 211, 153, 0.06) 45%, transparent 72%);
+  filter: blur(34px);
   pointer-events: none;
   z-index: 0;
+}
+
+.portrait-flicker-glow {
+  position: absolute;
+  inset: -6% -4% 12%;
+  border-radius: 50%;
+  background: radial-gradient(ellipse 62% 58% at 50% 34%, rgba(52, 211, 153, 0.34) 0%, rgba(16, 185, 129, 0.14) 38%, transparent 72%);
+  filter: blur(26px);
+  pointer-events: none;
+  z-index: 1;
+  opacity: var(--flicker-glow, 0);
+  transition: opacity 0.08s linear;
 }
 
 .portrait-fallback {
@@ -583,24 +595,25 @@ button {
   object-fit: contain;
   object-position: center bottom;
   z-index: 2;
-  filter: drop-shadow(0 24px 48px rgba(0, 0, 0, 0.72));
   transition: opacity 0.28s ease;
   user-select: none;
   -webkit-user-drag: none;
-  will-change: opacity, transform;
+  will-change: opacity, filter;
 }
 
 /* In 3D mode: seamless Retina photo-to-particle hybrid driven by JS variables
-   (DSLR-sharp at rest; cursor punches an interactive particle window; click/drag/assembly shows pure 3D cloud) */
+   (zero second shadow: WebGL2 particles clip strictly inside the hover circle when photo is visible) */
 .is-3d.portrait-mode-dots .portrait-fallback {
   opacity: var(--photo-alpha, 0);
+  filter: brightness(var(--photo-bright, 1));
   pointer-events: none;
-  -webkit-mask-image: radial-gradient(circle at var(--mask-x, -200px) var(--mask-y, -200px), transparent 0px, transparent var(--mask-r, 0px), rgba(0, 0, 0, 0.45) calc(var(--mask-r, 0px) + 38px), #000 calc(var(--mask-r, 0px) + 86px));
-  mask-image: radial-gradient(circle at var(--mask-x, -200px) var(--mask-y, -200px), transparent 0px, transparent var(--mask-r, 0px), rgba(0, 0, 0, 0.45) calc(var(--mask-r, 0px) + 38px), #000 calc(var(--mask-r, 0px) + 86px));
+  -webkit-mask-image: radial-gradient(circle at var(--mask-x, -300px) var(--mask-y, -300px), transparent 0px, transparent var(--mask-r, 0px), rgba(0, 0, 0, 0.45) calc(var(--mask-r, 0px) + 34px), #000 calc(var(--mask-r, 0px) + 74px));
+  mask-image: radial-gradient(circle at var(--mask-x, -300px) var(--mask-y, -300px), transparent 0px, transparent var(--mask-r, 0px), rgba(0, 0, 0, 0.45) calc(var(--mask-r, 0px) + 34px), #000 calc(var(--mask-r, 0px) + 74px));
 }
 
 .is-3d.portrait-mode-photo .portrait-fallback {
   opacity: 1;
+  filter: none;
   -webkit-mask-image: none;
   mask-image: none;
   transform: none;
