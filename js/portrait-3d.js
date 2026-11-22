@@ -166,7 +166,7 @@
     'uniform vec2 uRot;\n' +        // cos(rotY), sin(rotY)
     'uniform vec3 uPtr;\n' +        // ptrX_ndc, ptrY_ndc, active
     'uniform vec3 uRip;\n' +        // ripX_ndc, ripY_ndc, ripT
-    'uniform float uTime, uAssemble, uEnergy, uAspect, uDataAspect, uDpr, uFade;\n' +
+    'uniform float uTime, uAssemble, uEnergy, uAspect, uDataAspect, uCellPx, uDpr, uFade;\n' +
     'out vec4 vCol;\n' +
     'out float vWall;\n' +
     'void main() {\n' +
@@ -179,48 +179,50 @@
     '    wx += (dist > 0.001 ? d.x / dist : 0.0) * push;\n' +
     '    wy += (dist > 0.001 ? d.y / dist : 0.0) * push;\n' +
     '    gl_Position = vec4(wx, wy, 0.5 + aPos.z * 0.25, 1.0);\n' +
-    '    gl_PointSize = (1.4 + aSeed * 1.9) * uDpr;\n' +
+    '    gl_PointSize = (1.4 + aSeed * 1.8) * uDpr;\n' +
     '    vCol = aCol;\n' +
     '    vWall = 1.0;\n' +
     '    return;\n' +
     '  }\n' +
     '  vec3 p = aPos;\n' +
     '  float ease = 1.0 - pow(1.0 - uAssemble, 3.0);\n' +
-    '  float scatter = (1.0 - ease) * (1.2 + aSeed * 1.5);\n' +
-    '  float ang = aSeed * 6.28318 + (1.0 - ease) * 3.5;\n' +
-    '  p.x += cos(ang) * scatter * 0.6;\n' +
-    '  p.y += sin(ang) * scatter * 0.45;\n' +
-    '  p.z += (aSeed - 0.5) * (scatter + uEnergy * 0.35);\n' +
-    '  // Breathing & micro-float\n' +
-    '  p.y += sin(uTime * 1.4 + p.x * 3.0 + aSeed * 6.0) * 0.005;\n' +
-    '  p.z += cos(uTime * 1.1 + aSeed * 9.0) * 0.008;\n' +
-    '  // 3D Y-axis rotation\n' +
+    '  float scatter = (1.0 - ease) * (1.1 + aSeed * 1.4);\n' +
+    '  float ang = aSeed * 6.28318 + (1.0 - ease) * 3.2;\n' +
+    '  p.x += cos(ang) * scatter * 0.55;\n' +
+    '  p.y += sin(ang) * scatter * 0.42;\n' +
+    '  p.z += (aSeed - 0.5) * (scatter + uEnergy * 0.24);\n' +
+    '  // Subtle cohesive breathing (keeps facial features locked and clean)\n' +
+    '  p.y += sin(uTime * 1.25 + p.x * 1.8) * 0.0022;\n' +
+    '  p.z += cos(uTime * 0.95 + p.y * 1.6) * 0.003;\n' +
+    '  // Natural 3D Y-axis rotation\n' +
     '  vec3 r;\n' +
     '  r.x = p.x * uRot.x + p.z * uRot.y;\n' +
     '  r.y = p.y;\n' +
     '  r.z = -p.x * uRot.y + p.z * uRot.x;\n' +
-    '  // Perspective divide\n' +
-    '  float persp = 1.0 / (1.0 - r.z * 0.38);\n' +
+    '  // Subtle perspective divide (prevents facial distortion/bulging)\n' +
+    '  float persp = 1.0 / (1.0 - r.z * 0.16);\n' +
     '  vec2 ndc;\n' +
     '  ndc.x = uSlot.x + (r.x / uDataAspect) * uSlot.z * persp;\n' +
     '  ndc.y = uSlot.y + r.y * uSlot.w * persp;\n' +
     '  // Cursor parting + signal-emerald rim boost\n' +
     '  vec2 dPtr = vec2((ndc.x - uPtr.x) * uAspect, ndc.y - uPtr.y);\n' +
     '  float distPtr = length(dPtr);\n' +
-    '  float part = uPtr.z * smoothstep(0.24, 0.0, distPtr);\n' +
+    '  float part = uPtr.z * smoothstep(0.22, 0.0, distPtr);\n' +
     '  vec2 dirPtr = distPtr > 0.0005 ? dPtr / distPtr : vec2(0.0, 1.0);\n' +
-    '  ndc += dirPtr * part * (0.045 + aSeed * 0.03);\n' +
+    '  ndc += dirPtr * part * (0.042 + aSeed * 0.028);\n' +
     '  // Click shockwave ripple\n' +
     '  vec2 dRip = vec2((ndc.x - uRip.x) * uAspect, ndc.y - uRip.y);\n' +
     '  float distRip = length(dRip);\n' +
     '  float waveR = uRip.z * 0.95;\n' +
     '  float rip = exp(-pow((distRip - waveR) * 14.0, 2.0)) * exp(-uRip.z * 2.1);\n' +
-    '  ndc += (distRip > 0.001 ? dRip / distRip : vec2(0.0)) * rip * 0.03;\n' +
+    '  ndc += (distRip > 0.001 ? dRip / distRip : vec2(0.0)) * rip * 0.028;\n' +
     '  gl_Position = vec4(ndc, clamp(0.2 - r.z * 0.4, -0.95, 0.95), 1.0);\n' +
-    '  float basePt = max(1.65, min(3.4, uSlot.w * 280.0 / 120.0));\n' +
-    '  gl_PointSize = (basePt + persp * 0.45 + rip * 1.8) * uDpr;\n' +
-    '  vec3 tint = mix(aCol.rgb, vec3(0.20, 0.85, 0.60), part * 0.58 + rip * 0.45);\n' +
-    '  vCol = vec4(tint, aCol.a * uFade * (0.85 + 0.15 * ease));\n' +
+    '  // Grid-locked splat size: smooth cohesive portrait at rest, crisp molecules when disturbed\n' +
+    '  float disturb = clamp(part + rip + (1.0 - ease) + uEnergy * 0.5, 0.0, 1.0);\n' +
+    '  float ptSize = uCellPx * mix(1.52, 1.05, disturb) + rip * 1.4 * uDpr;\n' +
+    '  gl_PointSize = max(1.6 * uDpr, ptSize);\n' +
+    '  vec3 tint = mix(aCol.rgb, vec3(0.20, 0.85, 0.60), part * 0.55 + rip * 0.42);\n' +
+    '  vCol = vec4(tint, aCol.a * uFade * (0.92 + 0.08 * ease));\n' +
     '  vWall = 0.0;\n' +
     '}\n';
 
@@ -233,7 +235,7 @@
     '  vec2 c = gl_PointCoord - 0.5;\n' +
     '  float r2 = dot(c, c);\n' +
     '  if (r2 > 0.25) discard;\n' +
-    '  float soft = smoothstep(0.25, vWall > 0.5 ? 0.04 : 0.09, r2);\n' +
+    '  float soft = smoothstep(0.25, vWall > 0.5 ? 0.04 : 0.06, r2);\n' +
     '  float a = vCol.a * soft;\n' +
     '  fragColor = vec4(vCol.rgb * a, a);\n' +
     '}\n';
@@ -290,6 +292,7 @@
   var uEnergy = gl.getUniformLocation(prog, 'uEnergy');
   var uAspect = gl.getUniformLocation(prog, 'uAspect');
   var uDataAspect = gl.getUniformLocation(prog, 'uDataAspect');
+  var uCellPx = gl.getUniformLocation(prog, 'uCellPx');
   var uDpr = gl.getUniformLocation(prog, 'uDpr');
   var uFade = gl.getUniformLocation(prog, 'uFade');
 
@@ -325,8 +328,8 @@
       if (!state.dragging) {
         state.userRot *= Math.pow(0.18, dt);
       }
-      var scrollRot = Math.sin(window.scrollY * 0.0018) * 0.24;
-      var hoverRot = state.ptrActive * state.ptrX * 0.09;
+      var scrollRot = Math.sin(window.scrollY * 0.0018) * 0.16;
+      var hoverRot = state.ptrActive * state.ptrX * 0.06;
       state.rotY = scrollRot + state.userRot + hoverRot;
     }
 
@@ -339,6 +342,7 @@
     var cy = 1 - ((rect.top + rect.height * 0.5) / vh) * 2;
     var hw = rect.width / vw;
     var hh = rect.height / vh;
+    var cellPx = (rect.height / (data.rows || 240)) * dpr;
 
     // Fade portrait particles smoothly as hero scrolls out, while keeping ambient wall active
     var onScreen = rect.bottom > -80 && rect.top < vh + 80;
@@ -357,7 +361,8 @@
     gl.uniform1f(uAssemble, state.assemble);
     gl.uniform1f(uEnergy, state.scrollEnergy);
     gl.uniform1f(uAspect, vw / vh);
-    gl.uniform1f(uDataAspect, data.aspect || 1.034);
+    gl.uniform1f(uDataAspect, data.aspect || 1.033);
+    gl.uniform1f(uCellPx, cellPx);
     gl.uniform1f(uDpr, dpr);
     gl.uniform1f(uFade, portraitFade);
 
