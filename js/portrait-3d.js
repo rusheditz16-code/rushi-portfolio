@@ -380,9 +380,11 @@
       photoEl.style.transform = '';
     }
 
-    // Fade portrait particles smoothly as hero scrolls out, while keeping ambient wall active
+    // Fade portrait particles out cleanly at pure rest (eliminates any hairline double-edge)
+    // while keeping them 100% active during assembly, hover-parting, click ripples, drag, and fast scroll.
     var onScreen = rect.bottom > -80 && rect.top < vh + 80;
-    var portraitFade = state.mode === 'dots' && onScreen ? 1.0 : 0.0;
+    var needParticles = Math.min(1.0, Math.max(1.0 - state.photoAlpha, state.maskR / 42.0));
+    var portraitFade = state.mode === 'dots' && onScreen ? needParticles : 0.0;
 
     gl.clearColor(0, 0, 0, 0);
     gl.clear(gl.COLOR_BUFFER_BIT);
