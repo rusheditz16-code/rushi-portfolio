@@ -1,0 +1,696 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Rushi — AI-Driven Problem Solver &amp; Full-Stack Engineer</title>
+  <meta name="description" content="Portfolio of Rushi (Dabhi Rushiraj Jayeshbhai) — 1st-year B.Tech CSE (AI &amp; ML) engineer at Gyanmanjari Innovative University building real-world Agentic AI, Civic-Tech, and Full-Stack products.">
+  <meta name="author" content="Dabhi Rushiraj Jayeshbhai">
+  <meta name="theme-color" content="#050a08">
+  <meta property="og:type" content="profile">
+  <meta property="og:title" content="Rushi — AI-Driven Problem Solver &amp; Full-Stack Engineer">
+  <meta property="og:description" content="Turning real-world civic, safety, healthcare, and desktop problems into deployed AI-driven products.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script>
+    (function () {
+      var d = document.documentElement;
+      if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        d.classList.add('rv');
+        setTimeout(function () { d.classList.add('rv-all'); }, 2800);
+      }
+    })();
+  </script>
+</head>
+<body>
+  <a class="skip" href="#about">Skip to content</a>
+
+  <!-- Fixed Full-Viewport 3D Particle Portrait + Ambient Depth Wall -->
+  <canvas id="portrait-canvas" aria-hidden="true"></canvas>
+  <div class="plate" aria-hidden="true"></div>
+
+  <!-- Floating Navigation Bar -->
+  <header class="topbar">
+    <a class="brand-pill" href="#top">
+      <span class="status-dot" aria-hidden="true"></span>
+      <span>RUSHI<span class="brand-pill__sub"> // AI &amp; FULL-STACK</span></span>
+    </a>
+
+    <nav class="nav-links" aria-label="Primary navigation">
+      <a href="#about">About</a>
+      <a href="#certs">Credentials</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#contact">Contact</a>
+    </nav>
+
+    <div class="topbar-actions">
+      <button type="button" class="pill-btn pill-btn--hide-sm" data-portrait-mode>Switch to Photo</button>
+      <a class="pill-btn pill-btn--accent" href="assets/docs/Rushiraj_Dabhi_Resume.pdf" target="_blank" rel="noopener noreferrer">Resume ↗</a>
+      <button type="button" class="nav-toggle" data-nav-toggle aria-expanded="false" aria-controls="mobile-drawer" aria-label="Toggle navigation menu">☰</button>
+    </div>
+  </header>
+
+  <nav class="mobile-drawer" id="mobile-drawer" data-mobile-drawer aria-label="Mobile navigation">
+    <a href="#about"><span>About Me</span><span class="mono">01</span></a>
+    <a href="#certs"><span>Credentials</span><span class="mono">02</span></a>
+    <a href="#skills"><span>Skills &amp; AI Pipelines</span><span class="mono">03</span></a>
+    <a href="#projects"><span>Deployed Projects</span><span class="mono">04</span></a>
+    <a href="#contact"><span>Contact</span><span class="mono">05</span></a>
+  </nav>
+
+  <div class="page" id="top">
+    <main class="poster">
+
+      <!-- 1. HERO -->
+      <section class="hero" aria-label="Introduction">
+        <p class="display display--xl title"><span class="title__fit" data-fit-title data-rv="chars">RUSHI.BUILD</span></p>
+
+        <div class="hero__grid">
+          <div class="hero__copy">
+            <h1 class="hello" data-rv="lines">Hello,<br>I’m <span class="hello__accent">Rushi</span></h1>
+
+            <ul class="list roles" data-rv="rows">
+              <li>AI-Driven Problem Solver <span>// Systems</span></li>
+              <li>Agentic AI &amp; Full-Stack Engineer <span>// End-to-End</span></li>
+              <li>Civic-Tech &amp; Real-World Builder <span>// Vercel &amp; Python</span></li>
+              <li>B.Tech CSE (AI &amp; ML) <span>// GMIU Bhavnagar</span></li>
+            </ul>
+
+            <p class="lead" data-rv="lines">1st-year CS (AI &amp; ML) engineer turning real-world civic, safety, healthcare, and desktop challenges into shipped AI-powered software.</p>
+
+            <div class="hero__cta">
+              <a class="btn btn--primary" href="#projects">Explore Projects ↓</a>
+              <a class="btn btn--ghost" href="assets/docs/Rushiraj_Dabhi_Resume.pdf" target="_blank" rel="noopener noreferrer">Download Resume ↗</a>
+              <span class="hero__meta">Bhavnagar, Gujarat · Open to Internships</span>
+            </div>
+          </div>
+
+          <div class="portrait-stage">
+            <div class="portrait-slot" data-portrait-slot role="img" aria-label="Interactive 3D particle portrait of Rushi — move cursor or drag to rotate">
+              <span class="portrait-shadow" aria-hidden="true"></span>
+              <img
+                class="portrait-fallback"
+                src="assets/photos/rushi-portrait-cutout.png"
+                width="930"
+                height="900"
+                alt="Portrait cutout of Rushi in a black developer hoodie"
+                decoding="sync"
+                draggable="false"
+              >
+            </div>
+            <div class="portrait-controls">
+              <span class="portrait-hint">Drag portrait · Hover to part particles · Click for ripple</span>
+              <button type="button" class="pill-btn" data-portrait-mode>Switch to Photo</button>
+              <button type="button" class="pill-btn" data-portrait-pause>Pause 3D</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. ABOUT ME -->
+      <section class="section about" id="about">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow">01 / Identity &amp; Story</span>
+            <h2 class="display display--l" data-rv="chars">About Me</h2>
+          </div>
+        </div>
+
+        <div class="about__grid">
+          <div class="about__story">
+            <p class="about__headline" data-rv="lines">
+              I’m <strong>Dabhi Rushiraj Jayeshbhai</strong> — building practical AI products that ship to real citizens and real desktops.
+            </p>
+
+            <p class="about__para">
+              As a 1st-year Computer Science &amp; Engineering (AI &amp; ML) student at <strong>Gyanmanjari Innovative University (GMIU)</strong>, I focus on engineering complete systems instead of toy demos. Whether it is a bilingual Gujarati anti-scam assistant protecting rural districts for DDO Botad, an opaque QR emergency identity network for disaster reunification, or an always-on Stark-style desktop AI OS running local voice and Vector RAG memory, I build to solve tangible problems fast.
+            </p>
+
+            <div class="edu-card">
+              <div class="edu-card__top">
+                <span>EDUCATION // 1ST YEAR</span>
+                <span>EXPECTED GRADUATION: 2030</span>
+              </div>
+              <div class="edu-card__title">B.Tech in Computer Science &amp; Engineering (AI &amp; ML)</div>
+              <div class="edu-card__sub">Gyanmanjari Innovative University, Bhavnagar, Gujarat · Virtual Industry Experience: Deloitte Cyber Security Job Simulation (Aug 2026)</div>
+            </div>
+
+            <div class="stats-strip">
+              <div class="stat-card">
+                <div class="stat-card__num">05</div>
+                <div class="stat-card__label">Shipped Systems</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-card__num">06+</div>
+                <div class="stat-card__label">Verified AI Certs</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-card__num">150ms</div>
+                <div class="stat-card__label">Voice Latency</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-card__num">2030</div>
+                <div class="stat-card__label">B.Tech AI &amp; ML</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="about__collage">
+            <figure class="ph ph--tall" data-rv="photo">
+              <img src="assets/photos/rushi-hoodie-orig.jpg" width="1024" height="1024" alt="Rushi in a black developer hoodie with emerald rim lighting" loading="lazy">
+              <figcaption class="ph__cap">AI &amp; Full-Stack Builder</figcaption>
+            </figure>
+            <figure class="ph ph--tall" data-rv="photo">
+              <img src="assets/photos/rushi-outdoor.jpg" width="1200" height="900" alt="Rushi outdoors overlooking a dry river valley landscape in Gujarat" loading="lazy">
+              <figcaption class="ph__cap">Bhavnagar · Roots</figcaption>
+            </figure>
+            <figure class="ph ph--wide ph--hud" data-rv="photo">
+              <img src="assets/projects/kairos-hud.png" width="1400" height="788" alt="K.A.I.R.O.S. custom desktop AI operating system interface built by Rushi" loading="lazy">
+              <figcaption class="ph__cap">K.A.I.R.O.S. HUD · Local AI OS</figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. CURATED CERTIFICATIONS & CREDENTIALS -->
+      <section class="section certs" id="certs">
+        <div class="section-head">
+          <div class="certs__head-wrap">
+            <div>
+              <span class="eyebrow">02 / Curated Proof</span>
+              <h2 class="display display--l" data-rv="chars">Credentials</h2>
+            </div>
+            <span class="badge" data-rv="badge" aria-hidden="true">
+              <img src="assets/seal-badge.svg" width="106" height="106" alt="" decoding="async" draggable="false">
+            </span>
+          </div>
+          <p class="mono" style="font-size:12px;color:var(--muted);">Top 6 high-impact certifications · Click any card to verify</p>
+        </div>
+
+        <div class="certs__grid">
+          <button type="button" class="cert-card" data-open-cert="oracle">
+            <div>
+              <div class="cert-card__issuer"><span>Oracle University</span><span class="cert-card__date">OCT 2026</span></div>
+              <h3 class="cert-card__title">Agentic AI Certified Foundations Associate</h3>
+              <p class="cert-card__desc">Verified autonomous agent design, tool orchestration, and LLM workflow certification (Valid to Oct 2028).</p>
+            </div>
+            <div class="cert-card__foot"><span>ID: 103568242AAI26OFA</span><span class="cert-card__cta">Inspect ↗</span></div>
+          </button>
+
+          <button type="button" class="cert-card" data-open-cert="deloitte">
+            <div>
+              <div class="cert-card__issuer"><span>Deloitte · Forage</span><span class="cert-card__date">AUG 2026</span></div>
+              <h3 class="cert-card__title">Cyber Security Job Simulation</h3>
+              <p class="cert-card__desc">Enterprise threat analysis, security log triage, and operational cyber defense simulation tasks.</p>
+            </div>
+            <div class="cert-card__foot"><span>Code: 6a8c0d83...d849</span><span class="cert-card__cta">Inspect ↗</span></div>
+          </button>
+
+          <button type="button" class="cert-card" data-open-cert="aws">
+            <div>
+              <div class="cert-card__issuer"><span>AWS Training</span><span class="cert-card__date">NOV 2026</span></div>
+              <h3 class="cert-card__title">Foundations of Prompt Engineering</h3>
+              <p class="cert-card__desc">Structured prompting, model guardrails, chain-of-thought tuning, and deterministic output control.</p>
+            </div>
+            <div class="cert-card__foot"><span>AWS Certification</span><span class="cert-card__cta">Inspect ↗</span></div>
+          </button>
+
+          <button type="button" class="cert-card" data-open-cert="ibm">
+            <div>
+              <div class="cert-card__issuer"><span>IBM SkillsBuild</span><span class="cert-card__date">NOV 2026</span></div>
+              <h3 class="cert-card__title">AI Fundamentals: Understanding AI</h3>
+              <p class="cert-card__desc">Core machine learning, NLP, and ethical AI systems badge independently verifiable on Credly.</p>
+            </div>
+            <div class="cert-card__foot"><span>credly.com/go/M1KwZUPe</span><span class="cert-card__cta">Inspect ↗</span></div>
+          </button>
+
+          <button type="button" class="cert-card" data-open-cert="google">
+            <div>
+              <div class="cert-card__issuer"><span>Google Cloud · SkillUp</span><span class="cert-card__date">SEP 2026</span></div>
+              <h3 class="cert-card__title">Large Language Models &amp; Image Generation</h3>
+              <p class="cert-card__desc">Dual generative AI credentials covering transformer LLM mechanics and diffusion image pipelines.</p>
+            </div>
+            <div class="cert-card__foot"><span>Codes: 10717386 / 10705691</span><span class="cert-card__cta">Inspect ↗</span></div>
+          </button>
+
+          <button type="button" class="cert-card" data-open-cert="chaoscore">
+            <div>
+              <div class="cert-card__issuer"><span>ChaosCore &amp; Scaler</span><span class="cert-card__date">SEP–NOV 2026</span></div>
+              <h3 class="cert-card__title">Hackathon 2026 &amp; RAG / Payment LLD</h3>
+              <p class="cert-card__desc">ChaosCore Hackathon 2026 builder + Scaler deep-dives on RAG vs Agentic AI and Payment App LLD.</p>
+            </div>
+            <div class="cert-card__foot"><span>GMIU Representative</span><span class="cert-card__cta">Inspect ↗</span></div>
+          </button>
+        </div>
+      </section>
+
+      <!-- 4. SKILLS & AI-DRIVEN PIPELINES -->
+      <section class="section work" id="skills">
+        <div class="work__col-left">
+          <span class="eyebrow">03 / Capabilities</span>
+          <h2 class="display display--l work__h" data-rv="chars">Core Stack</h2>
+          <ul class="list skill-rows" data-rv="rows">
+            <li><span>HTML5 / CSS3 / JS</span><span class="skill-tag">Core</span></li>
+            <li><span>TypeScript &amp; React 19</span><span class="skill-tag">UI</span></li>
+            <li><span>Next.js &amp; Vite</span><span class="skill-tag">Web</span></li>
+            <li><span>Python &amp; FastAPI</span><span class="skill-tag">Backend</span></li>
+            <li><span>WebSockets &amp; REST</span><span class="skill-tag">Real-Time</span></li>
+            <li><span>Tailwind CSS</span><span class="skill-tag">Styling</span></li>
+            <li><span>SQLite &amp; Vector RAG</span><span class="skill-tag">Memory</span></li>
+            <li><span>Git, GitHub &amp; Vercel</span><span class="skill-tag">Ship</span></li>
+            <li><span>PyWebView &amp; Win32</span><span class="skill-tag">Desktop</span></li>
+            <li><span>System &amp; Payment LLD</span><span class="skill-tag">Design</span></li>
+          </ul>
+        </div>
+
+        <div class="work__col-right">
+          <span class="eyebrow">Domains Built For</span>
+          <h2 class="display display--l work__h" data-rv="chars">Focused On</h2>
+          <ul class="list skill-rows skill-rows--single" data-rv="rows">
+            <li><span>Civic-Tech &amp; District E-Governance</span><span class="skill-tag">DDO Botad</span></li>
+            <li><span>Cybersecurity &amp; Anti-Fraud Defense</span><span class="skill-tag">1930 SOS</span></li>
+            <li><span>Disaster Identity &amp; Crisis Reunification</span><span class="skill-tag">QR / NFC</span></li>
+            <li><span>Autonomous Desktop AI Operating Systems</span><span class="skill-tag">K.A.I.R.O.S.</span></li>
+            <li><span>Healthcare &amp; Scheduled Local Commerce</span><span class="skill-tag">AyurSwift</span></li>
+            <li><span>Explainable AI Campus Platforms</span><span class="skill-tag">KhojSetu</span></li>
+          </ul>
+        </div>
+
+        <div class="work__full">
+          <div class="work__ai-head">
+            <span class="eyebrow">AI Engineering</span>
+            <h2 class="display display--l" data-rv="chars">Works With<br>AI-Driven Pipelines</h2>
+          </div>
+
+          <ul class="list skill-rows skill-rows--single work__ai-list" data-rv="rows">
+            <li><span>Agentic AI Loops &amp; Sandboxed Tool Registries</span><span class="skill-tag">Oracle</span></li>
+            <li><span>HeteroRoute Multi-Model Routing &amp; Failover</span><span class="skill-tag">LPU / LLM</span></li>
+            <li><span>Groq Whisper v3 Turbo Real-Time Voice Capture</span><span class="skill-tag">~150ms</span></li>
+            <li><span>Bilingual Citizen Prompt Workflows (Gujarati / EN)</span><span class="skill-tag">Civic AI</span></li>
+            <li><span>3-Tier Semantic Cache &amp; SQLite Vector RAG</span><span class="skill-tag">Memory</span></li>
+            <li><span>Explainable Factor-Match Scoring Engines</span><span class="skill-tag">Trust</span></li>
+            <li><span>AI Fact-Checking, Guardrails &amp; Bias Mitigation</span><span class="skill-tag">AWS / HP</span></li>
+          </ul>
+
+          <div class="work__ai-note">
+            <p class="ai__text" data-rv="lines">
+              I don’t treat AI as a fragile chat wrapper. I architect full-stack pipelines pairing low-latency voice, semantic memory, bilingual civic UX, and deterministic system design.
+            </p>
+            <div class="ai__subcards">
+              <div class="mini-metric">
+                <strong>Hardware-to-Cloud</strong>
+                <span>Windows desktop automation, live hardware telemetry, and Cloudflare edge tunneling in K.A.I.R.O.S.</span>
+              </div>
+              <div class="mini-metric">
+                <strong>Public-Impact First</strong>
+                <span>Gujarati voice scam triage and opaque QR disaster tokens built for accessibility under real constraints.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5. PROJECTS SHOWCASE & CONTINUOUS REEL -->
+      <section class="section projects" id="projects">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow">04 / Deployed &amp; Engineered</span>
+            <h2 class="display display--xxl" data-rv="chars">Projects</h2>
+          </div>
+          <p class="mono" style="color:var(--accent);font-size:13px;">05 SHIPPED &amp; LIVE SYSTEMS</p>
+        </div>
+
+        <!-- Continuous Horizontal Showcase Strip (Reference signature + WCAG 2.2.2 Pause button) -->
+        <div class="feed-wrap">
+          <div class="feed-controls">
+            <span class="mono" style="font-size:12px;color:var(--muted);">LIVE INTERFACE REEL — CLICK ANY FRAME TO INSPECT</span>
+            <button type="button" class="pill-btn" data-feed-toggle>Pause Reel</button>
+          </div>
+          <div class="feed" data-feed role="region" aria-label="Continuous project interface reel">
+            <div class="feed__track">
+              <button type="button" class="feed__card" data-open-project="kairos">
+                <img src="assets/projects/kairos-hud.png" alt="K.A.I.R.O.S. HUD interface" loading="lazy">
+                <div class="feed__label"><span>K.A.I.R.O.S. HUD</span><span>AI OS ↗</span></div>
+              </button>
+              <button type="button" class="feed__card" data-open-project="cyber-rakshak">
+                <img src="assets/projects/cyber-rakshak.png" alt="Botad Cyber Rakshak AI English interface" loading="lazy">
+                <div class="feed__label"><span>Cyber Rakshak AI</span><span>Vercel ↗</span></div>
+              </button>
+              <button type="button" class="feed__card" data-open-project="janraksha">
+                <img src="assets/projects/janraksha.png" alt="JanRaksha ID disaster reunification app" loading="lazy">
+                <div class="feed__label"><span>JanRaksha ID</span><span>Vercel ↗</span></div>
+              </button>
+              <button type="button" class="feed__card" data-open-project="khojsetu">
+                <img src="assets/projects/khojsetu.png" alt="KhojSetu campus lost and found platform" loading="lazy">
+                <div class="feed__label"><span>KhojSetu</span><span>Vercel ↗</span></div>
+              </button>
+              <button type="button" class="feed__card" data-open-project="ayurswift">
+                <img src="assets/projects/ayurswift.png" alt="AyurSwift scheduled Ayurvedic pharmacy" loading="lazy">
+                <div class="feed__label"><span>AyurSwift</span><span>Vercel ↗</span></div>
+              </button>
+
+              <!-- Seamless Loop Clone -->
+              <button type="button" class="feed__card" data-open-project="kairos" aria-hidden="true" tabindex="-1">
+                <img src="assets/projects/kairos-hud.png" alt="" loading="lazy">
+                <div class="feed__label"><span>K.A.I.R.O.S. HUD</span><span>AI OS ↗</span></div>
+              </button>
+              <button type="button" class="feed__card" data-open-project="cyber-rakshak" aria-hidden="true" tabindex="-1">
+                <img src="assets/projects/cyber-rakshak.png" alt="" loading="lazy">
+                <div class="feed__label"><span>Cyber Rakshak AI</span><span>Vercel ↗</span></div>
+              </button>
+              <button type="button" class="feed__card" data-open-project="janraksha" aria-hidden="true" tabindex="-1">
+                <img src="assets/projects/janraksha.png" alt="" loading="lazy">
+                <div class="feed__label"><span>JanRaksha ID</span><span>Vercel ↗</span></div>
+              </button>
+              <button type="button" class="feed__card" data-open-project="khojsetu" aria-hidden="true" tabindex="-1">
+                <img src="assets/projects/khojsetu.png" alt="" loading="lazy">
+                <div class="feed__label"><span>KhojSetu</span><span>Vercel ↗</span></div>
+              </button>
+              <button type="button" class="feed__card" data-open-project="ayurswift" aria-hidden="true" tabindex="-1">
+                <img src="assets/projects/ayurswift.png" alt="" loading="lazy">
+                <div class="feed__label"><span>AyurSwift</span><span>Vercel ↗</span></div>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="projects__bar">
+          <div class="filter-group" role="group" aria-label="Filter projects by category">
+            <button type="button" class="filter-btn is-active" data-filter="all" aria-pressed="true">All (5)</button>
+            <button type="button" class="filter-btn" data-filter="ai" aria-pressed="false">AI &amp; Agents</button>
+            <button type="button" class="filter-btn" data-filter="civic" aria-pressed="false">Civic-Tech &amp; Safety</button>
+            <button type="button" class="filter-btn" data-filter="fullstack" aria-pressed="false">Full-Stack Web</button>
+          </div>
+        </div>
+
+        <div class="projects-grid">
+          <!-- 1. K.A.I.R.O.S. (Featured Full Width) -->
+          <article class="project-card project-card--featured" data-category="ai fullstack">
+            <div class="project-card__media">
+              <img src="assets/projects/kairos-hud.png" width="1400" height="788" alt="K.A.I.R.O.S. autonomous desktop AI operating system HUD" loading="lazy">
+              <span class="project-card__num">01 / FLAGSHIP AI OS</span>
+            </div>
+            <div class="project-card__body">
+              <div>
+                <div class="project-card__kicker">Autonomous Desktop AI · Local + Cloud Tunnel</div>
+                <h3 class="project-card__title">K.A.I.R.O.S.</h3>
+                <p class="project-card__desc">
+                  Kinetic Artificial Intelligence Responsive Operating System — a full-duplex Windows desktop assistant with 150ms Groq Whisper voice capture, 24/7 wake word ("Hey Kairos"), HeteroRoute multi-model routing, 3-tier SQLite Vector RAG memory, live CPU/RAM/Battery gauges, and sandboxed shell/code tools.
+                </p>
+              </div>
+              <div>
+                <div class="tag-row">
+                  <span class="tag">Python + FastAPI</span>
+                  <span class="tag">React 19 + WebSockets</span>
+                  <span class="tag">Groq Whisper v3</span>
+                  <span class="tag">Vector RAG</span>
+                  <span class="tag">PyWebView HUD</span>
+                </div>
+                <div class="project-card__actions">
+                  <button type="button" class="btn btn--primary" data-open-project="kairos">Architecture Deep-Dive</button>
+                  <a class="btn btn--ghost" href="https://github.com/rusheditz16-code" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- 2. Botad Cyber Rakshak AI -->
+          <article class="project-card" data-category="ai civic">
+            <div class="project-card__media">
+              <img src="assets/projects/cyber-rakshak.png" width="1280" height="800" alt="Botad Cyber Rakshak AI English & Gujarati cyber fraud checker" loading="lazy">
+              <span class="project-card__num">02 / CIVIC AI</span>
+            </div>
+            <div class="project-card__body">
+              <div>
+                <div class="project-card__kicker">District Governance · DDO Botad</div>
+                <h3 class="project-card__title">Botad Cyber Rakshak AI</h3>
+                <p class="project-card__desc">
+                  બોટાદ સાયબર રક્ષક — Bilingual Gujarati &amp; English voice-assisted scam verification platform empowering rural citizens with instant fraud analysis and 1930 Golden Hour emergency reporting.
+                </p>
+              </div>
+              <div>
+                <div class="tag-row">
+                  <span class="tag">Gujarati / EN AI</span>
+                  <span class="tag">Voice Scam Check</span>
+                  <span class="tag">1930 SOS Flow</span>
+                  <span class="tag">Vercel</span>
+                </div>
+                <div class="project-card__actions">
+                  <a class="btn btn--primary" href="https://cyber-rakshak-ai-nine.vercel.app" target="_blank" rel="noopener noreferrer">Live App ↗</a>
+                  <button type="button" class="btn btn--ghost" data-open-project="cyber-rakshak">Case Study</button>
+                  <a class="btn btn--ghost" href="https://github.com/rusheditz16-code/cyber-rakshak-ai-4" target="_blank" rel="noopener noreferrer">Code ↗</a>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- 3. JanRaksha ID -->
+          <article class="project-card" data-category="civic fullstack">
+            <div class="project-card__media">
+              <img src="assets/projects/janraksha.png" width="1280" height="800" alt="JanRaksha ID emergency identity and family reunification platform" loading="lazy">
+              <span class="project-card__num">03 / PUBLIC SAFETY</span>
+            </div>
+            <div class="project-card__body">
+              <div>
+                <div class="project-card__kicker">Disaster Relief · Emergency Identity</div>
+                <h3 class="project-card__title">JanRaksha ID</h3>
+                <p class="project-card__desc">
+                  Rapid-response identity verification and family reunification system powered by privacy-safe opaque QR/NFC lookup tokens, medical alert cards, and volunteer triage workflows.
+                </p>
+              </div>
+              <div>
+                <div class="tag-row">
+                  <span class="tag">Next.js</span>
+                  <span class="tag">Opaque QR / NFC</span>
+                  <span class="tag">Emergency Ops UI</span>
+                  <span class="tag">Vercel</span>
+                </div>
+                <div class="project-card__actions">
+                  <a class="btn btn--primary" href="https://janraksha-id-demo.vercel.app" target="_blank" rel="noopener noreferrer">Live App ↗</a>
+                  <button type="button" class="btn btn--ghost" data-open-project="janraksha">Case Study</button>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- 4. KhojSetu -->
+          <article class="project-card" data-category="ai civic fullstack">
+            <div class="project-card__media">
+              <img src="assets/projects/khojsetu.png" width="1280" height="800" alt="KhojSetu campus lost and found bridge interface" loading="lazy">
+              <span class="project-card__num">04 / CAMPUS AI</span>
+            </div>
+            <div class="project-card__body">
+              <div>
+                <div class="project-card__kicker">Explainable Match Engine · Campus Bridge</div>
+                <h3 class="project-card__title">KhojSetu</h3>
+                <p class="project-card__desc">
+                  AI-assisted campus lost-and-found bridge using approximate campus zones, explainable factor-match scoring, and role-gated private ownership verification.
+                </p>
+              </div>
+              <div>
+                <div class="tag-row">
+                  <span class="tag">TypeScript</span>
+                  <span class="tag">Next.js</span>
+                  <span class="tag">Match Scoring</span>
+                  <span class="tag">Role-Gated Claims</span>
+                </div>
+                <div class="project-card__actions">
+                  <a class="btn btn--primary" href="https://khojsetu-pied.vercel.app/" target="_blank" rel="noopener noreferrer">Live App ↗</a>
+                  <button type="button" class="btn btn--ghost" data-open-project="khojsetu">Case Study</button>
+                  <a class="btn btn--ghost" href="https://github.com/rusheditz16-code/KhojSetu" target="_blank" rel="noopener noreferrer">Code ↗</a>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- 5. AyurSwift -->
+          <article class="project-card" data-category="fullstack">
+            <div class="project-card__media">
+              <img src="assets/projects/ayurswift.png" width="1280" height="800" alt="AyurSwift Ayurvedic pharmacy with Bhavnagar scheduled slots" loading="lazy">
+              <span class="project-card__num">05 / HEALTHTECH</span>
+            </div>
+            <div class="project-card__body">
+              <div>
+                <div class="project-card__kicker">E-Commerce · Local Slot Logistics</div>
+                <h3 class="project-card__title">AyurSwift</h3>
+                <p class="project-card__desc">
+                  Authentic Ayurvedic and OTC pharmacy platform supporting four daily scheduled Bhavnagar delivery slots alongside All-India tracked courier fulfillment.
+                </p>
+              </div>
+              <div>
+                <div class="tag-row">
+                  <span class="tag">Next.js</span>
+                  <span class="tag">TypeScript</span>
+                  <span class="tag">Slot Scheduling</span>
+                  <span class="tag">Vercel</span>
+                </div>
+                <div class="project-card__actions">
+                  <a class="btn btn--primary" href="https://ayurswift.vercel.app" target="_blank" rel="noopener noreferrer">Live App ↗</a>
+                  <button type="button" class="btn btn--ghost" data-open-project="ayurswift">Case Study</button>
+                  <a class="btn btn--ghost" href="https://github.com/rusheditz16-code/AyurSwift" target="_blank" rel="noopener noreferrer">Code ↗</a>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- 6. K.A.I.R.O.S. SIGNAL WAVE & INTERACTIVE CONSOLE -->
+      <section class="kairos-stage" data-kairos-stage aria-label="Interactive K.A.I.R.O.S. particle wave and terminal">
+        <canvas class="wave-canvas" aria-hidden="true"></canvas>
+
+        <div class="kairos-stage__head">
+          <div>
+            <span class="eyebrow">05 / Interactive Signal</span>
+            <h2 class="display display--l" data-rv="chars">Talk To<br>K.A.I.R.O.S.</h2>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:12px;align-items:flex-start;">
+            <p class="kairos-stage__sub">
+              Query Rushi’s stack, education, certifications, or live projects directly from this mini terminal — or toggle the Web Audio harmonic pulse to drive the 3D particle wave field.
+            </p>
+            <div style="display:flex;flex-wrap:wrap;gap:8px;">
+              <button type="button" class="pill-btn pill-btn--accent" data-synth-toggle aria-pressed="false">Audio Pulse: OFF</button>
+              <button type="button" class="pill-btn" data-wave-pause>Pause Wave</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="kairos-console">
+          <div class="console-chips">
+            <button type="button" class="chip-btn" data-cmd="whoami">whoami</button>
+            <button type="button" class="chip-btn" data-cmd="stack">stack</button>
+            <button type="button" class="chip-btn" data-cmd="projects">projects</button>
+            <button type="button" class="chip-btn" data-cmd="certs">certs</button>
+            <button type="button" class="chip-btn" data-cmd="education">education</button>
+            <button type="button" class="chip-btn" data-cmd="contact">contact</button>
+          </div>
+          <div class="console-output" data-console-output aria-live="polite">
+            <div><span class="cmd-echo">$ boot</span> K.A.I.R.O.S. portfolio interface ready. Click a quick chip or type a command (try: <span class="cmd-echo">whoami</span>, <span class="cmd-echo">projects</span>, <span class="cmd-echo">certs</span>).</div>
+          </div>
+          <form class="console-form" data-console-form>
+            <label for="kairos-cmd" class="visually-hidden">Enter command for K.A.I.R.O.S. console</label>
+            <span class="console-prompt" aria-hidden="true">rushi@kairos:~$</span>
+            <input id="kairos-cmd" class="console-input" data-console-input type="text" placeholder="Type whoami, stack, projects, certs, or help..." autocomplete="off">
+            <button type="submit" class="pill-btn pill-btn--accent">Run</button>
+          </form>
+        </div>
+      </section>
+
+      <!-- 7. CONTACT & GIANT KINETIC FOOTER -->
+      <footer class="contact" id="contact" tabindex="-1">
+        <h2 class="contact__label" data-rv="rule">
+          <span>Get In Touch</span>
+          <span class="contact__line" aria-hidden="true"></span>
+        </h2>
+
+        <div class="contact__layout">
+          <div>
+            <nav class="contact__big" aria-label="Primary developer profiles">
+              <a class="display display--xxl" href="https://github.com/rusheditz16-code" target="_blank" rel="noopener noreferrer me"><span data-rv="chars">GitHub</span></a>
+              <a class="display display--xxl" href="https://www.linkedin.com/in/rushiraj-dabhi-a2204242b" target="_blank" rel="noopener noreferrer me"><span data-rv="chars">LinkedIn</span></a>
+              <a class="display display--xxl" href="https://www.instagram.com/rusheditz16" target="_blank" rel="noopener noreferrer me"><span data-rv="chars">Instagram</span></a>
+            </nav>
+
+            <div class="contact__small">
+              <a class="contact__link-line" href="assets/docs/Rushiraj_Dabhi_Resume.pdf" target="_blank" rel="noopener noreferrer">Download Resume PDF ↗</a>
+              <button type="button" class="contact__link-line" data-copy-email>Copy Email Address</button>
+            </div>
+
+            <a class="contact__mail" href="mailto:rushirajdabhi16@gmail.com">rushirajdabhi16@gmail.com</a>
+          </div>
+
+          <div class="contact-form-card">
+            <h3>Send a Direct Message</h3>
+            <p class="contact-form-card__sub">Want to collaborate on AI systems, hackathons, or internships? Drop a note below.</p>
+
+            <form class="contact-form" id="contact-form" novalidate>
+              <div class="field">
+                <label for="contact-name">Your Name</label>
+                <span id="name-hint" class="hint">Enter at least 2 characters</span>
+                <input
+                  type="text"
+                  id="contact-name"
+                  name="name"
+                  required
+                  minlength="2"
+                  autocomplete="name"
+                  aria-describedby="name-hint"
+                  data-error="name-error"
+                >
+                <div id="name-error" class="error-msg">
+                  <span role="img" aria-label="Error">!</span> Please enter your name (at least 2 characters).
+                </div>
+              </div>
+
+              <div class="field">
+                <label for="contact-email">Email Address</label>
+                <span id="email-hint" class="hint">Format: you@example.com</span>
+                <input
+                  type="email"
+                  id="contact-email"
+                  name="email"
+                  required
+                  autocomplete="email"
+                  aria-describedby="email-hint"
+                  data-error="email-error"
+                >
+                <div id="email-error" class="error-msg">
+                  <span role="img" aria-label="Error">!</span> Enter a valid email address in the format you@example.com.
+                </div>
+              </div>
+
+              <div class="field">
+                <label for="contact-message">Project or Inquiry</label>
+                <span id="msg-hint" class="hint">Tell me briefly what you are building or hiring for</span>
+                <textarea
+                  id="contact-message"
+                  name="message"
+                  required
+                  minlength="10"
+                  aria-describedby="msg-hint"
+                  data-error="msg-error"
+                ></textarea>
+                <div id="msg-error" class="error-msg">
+                  <span role="img" aria-label="Error">!</span> Please write a short message (at least 10 characters).
+                </div>
+              </div>
+
+              <button type="submit" class="btn btn--primary">Send Message →</button>
+              <div id="form-status" class="form-status" hidden></div>
+            </form>
+          </div>
+        </div>
+
+        <div class="footer-bar">
+          <span>© 2026 Rushi (Dabhi Rushiraj Jayeshbhai) · Bhavnagar, Gujarat</span>
+          <span>Pure HTML5 · CSS3 · Vanilla JS + WebGL2</span>
+        </div>
+      </footer>
+    </main>
+  </div>
+
+  <!-- Single Reusable Top-Layer Native Modal Dialog -->
+  <dialog id="detail-modal" class="detail-dialog" closedby="any" aria-labelledby="modal-title">
+    <div class="dialog__inner">
+      <div class="dialog__head">
+        <div>
+          <div id="modal-kicker" class="project-card__kicker">Details</div>
+          <h2 id="modal-title" class="dialog__title">Details</h2>
+        </div>
+        <button type="button" class="dialog__close" data-dialog-close aria-label="Close details dialog" autofocus>✕</button>
+      </div>
+      <div id="modal-body" class="dialog__body"></div>
+    </div>
+  </dialog>
+
+  <script src="js/portrait-data.js" defer></script>
+  <script src="js/portrait-3d.js" defer></script>
+  <script src="js/reveal.js" defer></script>
+  <script src="js/wave-console.js" defer></script>
+  <script src="js/app.js" defer></script>
+</body>
+</html>

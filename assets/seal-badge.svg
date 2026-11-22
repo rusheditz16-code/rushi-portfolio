@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120" fill="none">
+  <defs>
+    <path id="sealRing" d="M60,60 m-42,0 a42,42 0 1,1 84,0 a42,42 0 1,1 -84,0"/>
+  </defs>
+  <circle cx="60" cy="60" r="56" stroke="#10B981" stroke-opacity="0.38" stroke-width="1.2" stroke-dasharray="3 4"/>
+  <circle cx="60" cy="60" r="28" stroke="#EEF7F2" stroke-opacity="0.22" stroke-width="1"/>
+  <text fill="#10B981" font-family="monospace" font-size="8.5" font-weight="600" letter-spacing="2.4">
+    <textPath href="#sealRing" startOffset="0%">VERIFIED • AI &amp; FULL-STACK • GMIU • 2026 • </textPath>
+  </text>
+  <path d="M60 44L63.8 56.2L76 60L63.8 63.8L60 76L56.2 63.8L44 60L56.2 56.2L60 44Z" fill="#10B981"/>
+</svg>
