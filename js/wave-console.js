@@ -162,11 +162,11 @@
   /* ---------- Interactive K.A.I.R.O.S. Console Responses ---------- */
   var COMMANDS = {
     help: 'Commands: whoami · stack · projects · certs · education · contact · clear',
-    whoami: 'RUSHI (Dabhi Rushiraj Jayeshbhai) — 1st-year B.Tech CSE (AI & ML) at Gyanmanjari Innovative University (Bhavnagar). AI-Driven Problem Solver & Full-Stack Builder.',
-    stack: 'Frontend: HTML5, CSS3, Vanilla JS, React 19, Next.js, TypeScript, Tailwind | Backend & AI: Python, FastAPI, WebSockets, Groq Whisper v3 Turbo, Multi-Model Routing, SQLite Vector RAG.',
-    projects: '01 K.A.I.R.O.S. (Autonomous Desktop AI OS) | 02 Botad Cyber Rakshak AI (DDO Botad) | 03 JanRaksha ID | 04 KhojSetu | 05 AyurSwift — scroll up or click any card for case study.',
+    whoami: 'Rushi (Dabhi Rushiraj Jayeshbhai), 1st-year B.Tech CSE (AI & ML) student at Gyanmanjari Innovative University, Bhavnagar. Building web apps, civic tools, and desktop software.',
+    stack: 'Frontend: HTML5, CSS3, Vanilla JS, React 19, Next.js, TypeScript, Tailwind | Backend: Python, FastAPI, WebSockets, Groq Whisper, SQLite Vector RAG.',
+    projects: '1. K.A.I.R.O.S. (Windows Voice Assistant) | 2. Botad Cyber Rakshak AI | 3. JanRaksha ID | 4. KhojSetu | 5. AyurSwift. Click any card above for details.',
     certs: 'Oracle Agentic AI Certified (Valid 2028) · Deloitte Cyber Security Simulation · AWS Prompt Engineering · IBM AI Fundamentals · Google Cloud LLMs · ChaosCore Hackathon 2026.',
-    education: 'B.Tech in Computer Science & Engineering (Artificial Intelligence & Machine Learning) · Gyanmanjari Innovative University, Bhavnagar · Expected 2030.',
+    education: 'B.Tech in Computer Science & Engineering (AI & ML), Gyanmanjari Innovative University, Bhavnagar (Class of 2030).',
     contact: 'Email: rushirajdabhi16@gmail.com | GitHub: github.com/rusheditz16-code | LinkedIn: linkedin.com/in/rushiraj-dabhi-a2204242b | IG: @rusheditz16'
   };
 
@@ -178,16 +178,16 @@
     state.pulseEnergy = 1.0;
 
     if (cmd === 'clear') {
-      output.innerHTML = '<div class="cmd-echo">&gt; K.A.I.R.O.S. buffer cleared. Ready for next query.</div>';
+      output.innerHTML = '<div class="cmd-echo">&gt; Cleared. Type a command or click a button above.</div>';
       return;
     }
 
     var reply = COMMANDS[cmd];
     if (!reply) {
       if (cmd.indexOf('kairos') !== -1) {
-        reply = 'K.A.I.R.O.S. v2.5: Local FastAPI + WebSocket engine with 150ms Groq Whisper voice capture, 24/7 wake-word detection, HeteroRoute LLM router, and 3-tier Vector RAG.';
+        reply = 'K.A.I.R.O.S. v2.5: Local FastAPI + WebSocket desktop assistant with ~150ms Groq Whisper voice capture, 24/7 wake word, multi-model routing, and SQLite Vector RAG.';
       } else if (cmd.indexOf('hello') !== -1 || cmd.indexOf('hi') !== -1) {
-        reply = 'Online and nominal. Ask me about whoami, stack, projects, certs, or contact!';
+        reply = 'Hey! Try whoami, stack, projects, certs, or contact.';
       } else {
         reply = 'Unknown command "' + cmd.replace(/[<>&]/g, '') + '". Try: whoami, stack, projects, certs, education, contact, or help.';
       }

@@ -12,45 +12,45 @@
   /* ---------- Project & Certificate Data Registries ---------- */
   var PROJECTS = {
     kairos: {
-      kicker: 'Flagship Autonomous Desktop AI OS',
+      kicker: 'Personal Desktop Assistant',
       title: 'K.A.I.R.O.S.',
       subtitle: 'Kinetic Artificial Intelligence Responsive Operating System',
       image: 'assets/projects/kairos-hud.png',
-      alt: 'K.A.I.R.O.S. Stark-style holographic desktop HUD showing CPU/RAM telemetry gauges, Arc Reactor audio visualizer, and live chat stream',
+      alt: 'K.A.I.R.O.S. desktop HUD showing CPU and RAM gauges, audio visualizer, and chat console',
       meta: [
-        { label: 'Architecture', value: 'FastAPI + WebSockets + React 19' },
-        { label: 'Voice Engine', value: 'Groq Whisper Large v3 Turbo (~150ms)' },
-        { label: 'Memory', value: '3-Tier Semantic Cache + SQLite Vector RAG' },
-        { label: 'Routing', value: 'HeteroRoute Multi-Model + Circuit Breaker' }
+        { label: 'Stack', value: 'FastAPI, WebSockets, React 19' },
+        { label: 'Voice', value: 'Groq Whisper Large v3 Turbo (~150ms)' },
+        { label: 'Memory', value: 'Semantic Cache + SQLite Vector RAG' },
+        { label: 'Routing', value: 'Multi-Model Router with Fallback' }
       ],
-      summary: 'Engineered a full-duplex desktop AI operating system built for Windows 11/10 with hardware-level always-on wake word ("Hey Kairos"), global hotkey Ctrl+Alt+K, PyWebView HUD, and local system automation.',
+      summary: 'A Windows 11/10 desktop assistant built with a custom PyWebView HUD, always-on wake word ("Hey Kairos"), global shortcut Ctrl+Alt+K, and direct local laptop automation.',
       highlights: [
-        'Multi-tier cognitive engine combining HeteroRoute complexity scoring and automatic failover across LLM backends.',
-        '24/7 microphone bridge using sounddevice + NumPy bypassing browser audio limitations.',
-        'Interactive Arc Reactor audio visualizer, live CPU/RAM/Battery/Disk telemetry gauges, and Node Memory Graph.',
-        'Decorator-based sandboxed tool registry (@kairos_tool) supporting PowerShell, Python, Java runtime execution, and Cloudflare Tunnel remote mobile pairing.'
+        'Routes prompts across multiple models with automatic backup switching if one goes down.',
+        'Captures microphone audio directly in Python (sounddevice + NumPy) to avoid browser mic glitches.',
+        'Includes live CPU, RAM, Battery, and Disk C: gauges, volume/brightness sliders, and an audio wave visualizer.',
+        'Supports custom @kairos_tool commands for shell/Python/Java execution plus remote phone access through Cloudflare Tunnel.'
       ],
       links: [
-        { label: 'View GitHub Profile ↗', href: 'https://github.com/rusheditz16-code', primary: true }
+        { label: 'GitHub Profile ↗', href: 'https://github.com/rusheditz16-code', primary: true }
       ]
     },
     'cyber-rakshak': {
-      kicker: 'Civic-Tech · District Governance (DDO Botad)',
+      kicker: 'District Initiative · DDO Botad',
       title: 'Botad Cyber Rakshak AI',
-      subtitle: 'બોટાદ સાયબર રક્ષક — Bilingual Rural Cyber Safety Assistant',
+      subtitle: 'Bilingual Gujarati & English Cyber Safety Helper',
       image: 'assets/projects/cyber-rakshak.png',
-      alt: 'Botad Cyber Rakshak AI live web interface in English and Gujarati showing voice scam check and 1930 Golden Hour emergency helpline',
+      alt: 'Botad Cyber Rakshak AI English and Gujarati scam verification app',
       meta: [
-        { label: 'Deployment', value: 'cyber-rakshak-ai-nine.vercel.app' },
-        { label: 'Languages', value: 'Gujarati & English (Bilingual)' },
-        { label: 'Focus', value: 'Cyber Fraud Prevention & 1930 SOS' },
-        { label: 'Stack', value: 'React, Vite, Tailwind, Prompt Workflows' }
+        { label: 'Live URL', value: 'cyber-rakshak-ai-nine.vercel.app' },
+        { label: 'Languages', value: 'Gujarati & English' },
+        { label: 'Purpose', value: 'Scam Checking & 1930 Emergency Help' },
+        { label: 'Stack', value: 'React, Vite, Tailwind CSS' }
       ],
-      summary: 'Localized AI-powered cybersecurity awareness and citizen assistance platform crafted for rural and district citizens under the DDO Botad public governance initiative.',
+      summary: 'A bilingual cyber-fraud checker built for Botad district so local citizens can check suspicious SMS messages, links, or calls in Gujarati or English.',
       highlights: [
-        'Voice-first and text scam verification workflow guiding citizens in native Gujarati on suspicious calls, UPI traps, and KYC fraud.',
-        'Direct Golden Hour emergency escalation guiding users to dial 1930 immediately during active financial fraud.',
-        'Structured awareness modules and interactive DDO operations readiness.'
+        'Tap-to-speak voice input and paste box for checking electricity bill scams, KYC messages, UPI traps, and fake lottery calls.',
+        'Direct 1930 Golden Hour helpline button and emergency freeze guide right at the top.',
+        'Includes an awareness hub and district dashboard view.'
       ],
       links: [
         { label: 'Open Live Site ↗', href: 'https://cyber-rakshak-ai-nine.vercel.app', primary: true },
@@ -58,44 +58,44 @@
       ]
     },
     janraksha: {
-      kicker: 'Humanitarian Crisis & Public Safety',
+      kicker: 'Disaster Relief · Public Safety',
       title: 'JanRaksha ID',
-      subtitle: 'Emergency Identity Verification & Family Reunification',
+      subtitle: 'Emergency Identity & Family Reunification',
       image: 'assets/projects/janraksha.png',
-      alt: 'JanRaksha ID live interface displaying emergency reunification hero metrics and sample medical QR identity card',
+      alt: 'JanRaksha ID live screen with emergency QR identity card',
       meta: [
-        { label: 'Deployment', value: 'janraksha-id-demo.vercel.app' },
-        { label: 'Standards', value: 'Privacy-Safe Opaque QR/NFC Tokens' },
-        { label: 'Workflows', value: 'Volunteer Scanner + Incident Ops' },
-        { label: 'Stack', value: 'Next.js, TypeScript, Responsive UI' }
+        { label: 'Live URL', value: 'janraksha-id-demo.vercel.app' },
+        { label: 'Privacy', value: 'Opaque QR / NFC Lookup Tokens' },
+        { label: 'Views', value: 'Volunteer Scanner & Ops Dashboard' },
+        { label: 'Stack', value: 'Next.js, TypeScript, Tailwind CSS' }
       ],
-      summary: 'Rapid-response emergency identity and family reunification platform enabling displaced individuals and responders to verify identity, medical alerts, and family links during disasters.',
+      summary: 'Web app for disaster and crowd-safety situations that lets volunteers scan an emergency QR/NFC tag to view medical alerts and help reunite separated families.',
       highlights: [
-        'Opaque QR/NFC lookup tokens protect private citizen data while surfacing critical emergency medical allergies and notes.',
-        'Dedicated Volunteer Scanner, Person Registration, and Operations Command views optimized for mobile responders.',
-        'High-contrast accessibility toggle and multi-language readiness for field deployment.'
+        'Uses opaque lookup tokens so sensitive personal details stay hidden while critical allergies or medical notes show immediately.',
+        'Built separate mobile-friendly screens for person registration, volunteer scanning, and operations tracking.',
+        'Includes a high-contrast toggle and clean field-ready layout.'
       ],
       links: [
         { label: 'Open Live Site ↗', href: 'https://janraksha-id-demo.vercel.app', primary: true }
       ]
     },
     khojsetu: {
-      kicker: 'AI Campus Utility & Match Engine',
+      kicker: 'Campus Utility · Lost & Found',
       title: 'KhojSetu',
-      subtitle: 'AI-Assisted Campus Lost & Found Bridge',
+      subtitle: 'Campus Lost & Found Bridge',
       image: 'assets/projects/khojsetu.png',
-      alt: 'KhojSetu live campus lost and found platform showing search gateway, approximate campus zones, and top overlap listing',
+      alt: 'KhojSetu live campus lost and found app',
       meta: [
-        { label: 'Deployment', value: 'khojsetu-pied.vercel.app' },
-        { label: 'Core Engine', value: 'Explainable Factor Match Scoring' },
-        { label: 'Trust Layer', value: 'Role-Gated Private Ownership Claims' },
+        { label: 'Live URL', value: 'khojsetu-pied.vercel.app' },
+        { label: 'Matching', value: 'Factor Match Scoring' },
+        { label: 'Verification', value: 'Role-Gated Private Claims' },
         { label: 'Stack', value: 'Next.js, TypeScript, Tailwind CSS' }
       ],
-      summary: 'Community-driven campus lost-and-found bridge connecting students and staff through explainable multi-factor matching and privacy-preserving ownership verification.',
+      summary: 'Campus lost-and-found tracker that pairs missing items with found listings based on item category, keywords, approximate campus zone, and timing.',
       highlights: [
-        'Matches lost and found reports via category, keyword, approximate campus zone, and timestamp signals.',
-        'Role-gated claim review prevents fraudulent claims while keeping personal student dossier records private.',
-        'Clean editorial registry layout with fast cross-device filtering and archive tracking.'
+        'Shows clear match reasons instead of a black-box score so students know why two listings overlap.',
+        'Uses private claim checks so items only go back to the actual owner.',
+        'Fast filtering across campus zones and saved dossiers.'
       ],
       links: [
         { label: 'Open Live Site ↗', href: 'https://khojsetu-pied.vercel.app/', primary: true },
@@ -103,22 +103,22 @@
       ]
     },
     ayurswift: {
-      kicker: 'HealthTech E-Commerce & Logistics',
+      kicker: 'Local E-Commerce · Bhavnagar',
       title: 'AyurSwift',
-      subtitle: 'Authentic Ayurvedic & OTC Pharmacy — Scheduled Slot Delivery',
+      subtitle: 'Ayurvedic & OTC Pharmacy with Slot Delivery',
       image: 'assets/projects/ayurswift.png',
-      alt: 'AyurSwift live store interface showcasing Bhavnagar 4 daily delivery slots and Ayurvedic product spotlight',
+      alt: 'AyurSwift live store showing Bhavnagar delivery slots',
       meta: [
-        { label: 'Deployment', value: 'ayurswift.vercel.app' },
-        { label: 'City Logistics', value: '4 Scheduled Bhavnagar Daily Slots' },
-        { label: 'National Reach', value: '2–4 Day All-India Tracked Courier' },
+        { label: 'Live URL', value: 'ayurswift.vercel.app' },
+        { label: 'Local Delivery', value: '4 Daily Slots in Bhavnagar (364001)' },
+        { label: 'Courier', value: '2-4 Day All-India Parcel Tracking' },
         { label: 'Stack', value: 'Next.js, TypeScript, Tailwind CSS' }
       ],
-      summary: 'Full-stack Ayurvedic and OTC wellness storefront designed for real-world local pharmacy dispatch in Bhavnagar alongside nationwide courier fulfillment.',
+      summary: 'Ayurvedic and OTC store designed for scheduled local delivery slots across Bhavnagar along with tracked All-India parcel shipping.',
       highlights: [
-        'Structured time-slot selector (9–10 AM, 10–11 AM, 6–7 PM, 7–8 PM) built for local Bhavnagar PIN code 364001 operations.',
-        'Category-driven wellness discovery, brand filtering, quick WhatsApp list ordering, and direct UPI checkout flow.',
-        'Responsive storefront tuned for fast mobile browsing and crisp typographic hierarchy.'
+        'Four daily Bhavnagar delivery windows (9-10 AM, 10-11 AM, 6-7 PM, 7-8 PM) plus stock checks before confirmation.',
+        'Category browsing, brand filters, quick WhatsApp list ordering, and direct UPI support.',
+        'Fast mobile layout built for everyday shoppers.'
       ],
       links: [
         { label: 'Open Live Site ↗', href: 'https://ayurswift.vercel.app', primary: true },
@@ -129,27 +129,27 @@
 
   var CERTS = {
     oracle: {
-      kicker: 'Official Industry Certification',
+      kicker: 'Certification',
       title: 'Oracle Agentic AI Certified Foundations Associate',
       image: '',
       meta: [
         { label: 'Issuer', value: 'Oracle University' },
-        { label: 'Issued / Valid', value: 'Oct 27, 2026 — Oct 27, 2028' },
+        { label: 'Validity', value: 'Oct 27, 2026 to Oct 27, 2028' },
         { label: 'Certificate ID', value: '103568242AAI26OFA' },
-        { label: 'Focus', value: 'Autonomous Agents, Tool Use & Orchestration' }
+        { label: 'Topics', value: 'Agents, Tool Use & Orchestration' }
       ],
-      summary: 'Recognized by Oracle Corporation for foundational mastery in Agentic AI architectures, multi-step reasoning loops, tool orchestration, and enterprise AI workflows.',
+      summary: 'Official Oracle University certification covering agent architectures, multi-step planning, and tool calling.',
       highlights: [
-        'Validates practical knowledge behind systems like K.A.I.R.O.S. multi-step tool-calling agents.',
-        'Signed eCertificate archived locally with verifiable Oracle credential ID.'
+        'Directly connects to the agent loop and tool registry I built inside K.A.I.R.O.S.',
+        'Signed eCertificate PDF included below with verification ID.'
       ],
       links: [
         { label: 'Open Certificate PDF ↗', href: 'assets/certs/oracle-agentic-ai.pdf', primary: true }
       ]
     },
     deloitte: {
-      kicker: 'Virtual Industry Job Simulation',
-      title: 'Deloitte — Cyber Security Job Simulation',
+      kicker: 'Virtual Job Simulation',
+      title: 'Deloitte Cyber Security Job Simulation',
       image: '',
       meta: [
         { label: 'Issuer', value: 'Deloitte (via Forage)' },
@@ -157,46 +157,46 @@
         { label: 'Enrolment Code', value: '6a8c0d83e62e344f1f47d849' },
         { label: 'User Code', value: '6a8c0b008f5fb1ac612b2638' }
       ],
-      summary: 'Completed practical enterprise cybersecurity analysis, log/threat assessment, and incident security operations tasks modeled after Deloitte Cyber teams.',
+      summary: 'Completed practical cybersecurity tasks on log analysis, threat detection, and security operations.',
       highlights: [
-        'Bridges defensive security operations thinking with civic anti-fraud work in Botad Cyber Rakshak AI.',
-        'Verified completion credential signed by Tina McCreery, Chief Human Resources Officer, Deloitte.'
+        'Helped shape the cyber-safety checklists and triage flow in Botad Cyber Rakshak AI.',
+        'Signed completion certificate archived below.'
       ],
       links: [
         { label: 'Open Certificate PDF ↗', href: 'assets/certs/deloitte-cyber-sim.pdf', primary: true }
       ]
     },
     aws: {
-      kicker: 'Cloud & Generative AI Credential',
-      title: 'AWS — Foundations of Prompt Engineering',
+      kicker: 'Course Certificate',
+      title: 'AWS Foundations of Prompt Engineering',
       image: '',
       meta: [
         { label: 'Issuer', value: 'AWS Training & Certification' },
         { label: 'Completed', value: 'November 09, 2026' },
-        { label: 'Domain', value: 'Structured Prompting & Guardrails' },
-        { label: 'Status', value: 'Verified Completion' }
+        { label: 'Topics', value: 'Prompting Patterns & Guardrails' },
+        { label: 'Status', value: 'Completed' }
       ],
-      summary: 'Covers zero-shot/few-shot prompting, chain-of-thought reasoning, prompt safety, and structured output engineering on modern foundation models.',
+      summary: 'Covers zero-shot and few-shot prompting, structured outputs, and keeping model answers accurate and safe.',
       highlights: [
-        'Directly applied to multilingual scam classification and safe guardrails in production AI apps.'
+        'Applied directly while tuning bilingual scam detection prompts.'
       ],
       links: [
         { label: 'Open Certificate PDF ↗', href: 'assets/certs/aws-prompt-engineering.pdf', primary: true }
       ]
     },
     ibm: {
-      kicker: 'Credly Verified Digital Badge',
-      title: 'IBM SkillsBuild — AI Fundamentals',
+      kicker: 'Digital Badge',
+      title: 'IBM SkillsBuild: AI Fundamentals',
       image: '',
       meta: [
         { label: 'Issuer', value: 'IBM SkillsBuild' },
         { label: 'Issued', value: 'November 09, 2026' },
-        { label: 'Credly URL', value: 'credly.com/go/M1KwZUPe' },
-        { label: 'Scope', value: 'Foundations for Understanding AI' }
+        { label: 'Credly Link', value: 'credly.com/go/M1KwZUPe' },
+        { label: 'Topics', value: 'ML, NLP & Responsible AI' }
       ],
-      summary: 'Industry-recognized IBM credential covering machine learning foundations, natural language understanding, computer vision concepts, and ethical AI.',
+      summary: 'IBM SkillsBuild badge covering machine learning basics, natural language processing, computer vision, and AI ethics.',
       highlights: [
-        'Independently verifiable live via Credly digital badge registry.'
+        'Verifiable online directly on Credly.'
       ],
       links: [
         { label: 'Verify on Credly ↗', href: 'https://www.credly.com/go/M1KwZUPe', primary: true },
@@ -204,38 +204,38 @@
       ]
     },
     google: {
-      kicker: 'Generative AI Track',
-      title: 'Google Cloud & Simplilearn — LLMs & Image Generation',
+      kicker: 'Course Completion',
+      title: 'Google Cloud & Simplilearn: LLMs & Image Generation',
       image: '',
       meta: [
         { label: 'Issuer', value: 'Google Cloud & Simplilearn SkillUp' },
         { label: 'Issued', value: 'September 2026' },
-        { label: 'Verification Codes', value: '10717386 (LLM) · 10705691 (Img)' },
-        { label: 'Focus', value: 'Large Language Models & Diffusion' }
+        { label: 'Codes', value: '10717386 (LLM) · 10705691 (Img)' },
+        { label: 'Topics', value: 'LLMs & Diffusion Models' }
       ],
-      summary: 'Dual completion covering transformer-based Large Language Model architectures, fine-tuning workflows, and diffusion-based image generation systems.',
+      summary: 'Completed both Google Cloud SkillUp tracks on Large Language Models and Image Generation fundamentals.',
       highlights: [
-        'Covers both text intelligence pipelines and visual generative AI concepts.'
+        'Covered transformer basics, fine-tuning concepts, and diffusion models.'
       ],
       links: [
         { label: 'Open LLM Certificate PDF ↗', href: 'assets/certs/google-cloud-llm.pdf', primary: true }
       ]
     },
     chaoscore: {
-      kicker: 'Hackathon & Systems Engineering',
-      title: 'ChaosCore Hackathon 2026 & Scaler AI/LLD Masterclasses',
+      kicker: 'Hackathon & Masterclasses',
+      title: 'ChaosCore Hackathon 2026 & Scaler Sessions',
       image: 'assets/certs/scaler-rag.jpg',
-      alt: 'Scaler Masterclass certificate for Dabhi Rushiraj Jayeshbhai on Understand RAG vs AI Agents vs Agentic AI',
+      alt: 'Scaler Masterclass certificate for Dabhi Rushiraj Jayeshbhai on RAG vs AI Agents vs Agentic AI',
       meta: [
         { label: 'Organizations', value: 'Invoqe (ChaosCore) & Scaler' },
-        { label: 'Dates', value: 'Sep – Nov 2026' },
-        { label: 'Tracks', value: 'Hackathon · RAG/Agentic AI · Payment LLD' },
-        { label: 'Institution', value: 'Representing GMIU, Bhavnagar' }
+        { label: 'Dates', value: 'Sep - Nov 2026' },
+        { label: 'Tracks', value: 'Hackathon · RAG & Agents · Payment LLD' },
+        { label: 'College', value: 'GMIU, Bhavnagar' }
       ],
-      summary: 'Hands-on builder participation in ChaosCore Hackathon 2026 paired with Scaler technical deep-dives on RAG vs. Agentic AI and Low-Level Design of Payment Apps.',
+      summary: 'Participated in ChaosCore Hackathon 2026 representing GMIU alongside Scaler masterclasses on RAG vs. Agentic AI and Payment App Low-Level Design.',
       highlights: [
-        'ChaosCore Hackathon 2026 (organized by Invoqe, representing GMIU Bhavnagar).',
-        'Scaler Masterclasses: Understand RAG vs AI Agents vs Agentic AI & Low-Level Design of Payment Apps.'
+        'ChaosCore Hackathon 2026 (organized by Invoqe).',
+        'Scaler Masterclasses on RAG/Agentic AI and Low-Level Design of Payment Apps.'
       ],
       links: [
         { label: 'Open Hackathon PDF ↗', href: 'assets/certs/chaoscore-hackathon.pdf', primary: true },
