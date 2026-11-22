@@ -555,7 +555,7 @@ button {
 .portrait-slot {
   position: relative;
   width: min(100%, 480px);
-  aspect-ratio: 930 / 900;
+  aspect-ratio: 982 / 950;
   max-height: clamp(420px, 64vh, 650px);
   margin: 0 auto;
   cursor: grab;
@@ -584,19 +584,26 @@ button {
   object-position: center bottom;
   z-index: 2;
   filter: drop-shadow(0 24px 48px rgba(0, 0, 0, 0.72));
-  transition: opacity 0.45s ease;
+  transition: opacity 0.28s ease;
   user-select: none;
   -webkit-user-drag: none;
+  will-change: opacity, transform;
 }
 
-/* When 3D WebGL/Canvas portrait is active in Dots mode, hide static img; show in Hybrid/Photo mode */
+/* In 3D mode: seamless Retina photo-to-particle hybrid driven by JS variables
+   (DSLR-sharp at rest; cursor punches an interactive particle window; click/drag/assembly shows pure 3D cloud) */
 .is-3d.portrait-mode-dots .portrait-fallback {
-  opacity: 0;
+  opacity: var(--photo-alpha, 0);
   pointer-events: none;
+  -webkit-mask-image: radial-gradient(circle at var(--mask-x, -200px) var(--mask-y, -200px), transparent 0px, transparent var(--mask-r, 0px), rgba(0, 0, 0, 0.45) calc(var(--mask-r, 0px) + 38px), #000 calc(var(--mask-r, 0px) + 86px));
+  mask-image: radial-gradient(circle at var(--mask-x, -200px) var(--mask-y, -200px), transparent 0px, transparent var(--mask-r, 0px), rgba(0, 0, 0, 0.45) calc(var(--mask-r, 0px) + 38px), #000 calc(var(--mask-r, 0px) + 86px));
 }
 
 .is-3d.portrait-mode-photo .portrait-fallback {
   opacity: 1;
+  -webkit-mask-image: none;
+  mask-image: none;
+  transform: none;
 }
 
 .portrait-controls {

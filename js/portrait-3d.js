@@ -9,6 +9,7 @@
   var root = document.documentElement;
   var canvas = document.getElementById('portrait-canvas');
   var slot = document.querySelector('[data-portrait-slot]');
+  var photoEl = slot ? slot.querySelector('.portrait-fallback') : null;
   var modeBtns = Array.prototype.slice.call(document.querySelectorAll('[data-portrait-mode]'));
   var pauseBtn = document.querySelector('[data-portrait-pause]');
   var data = window.__RUSHI_PORTRAIT__;
@@ -40,13 +41,17 @@
     dragStartRot: 0,
     ptrX: -9,
     ptrY: -9,
+    ptrClientX: -999,
+    ptrClientY: -999,
     ptrActive: 0,
     ripX: 0,
     ripY: 0,
     ripT: 10,
     assemble: reduced ? 1 : 0,
     scrollEnergy: 0,
-    lastScroll: window.scrollY
+    lastScroll: window.scrollY,
+    photoAlpha: reduced ? 1 : 0,
+    maskR: 0
   };
 
   function applyModeClasses() {
@@ -76,6 +81,8 @@
 
   /* Pointer & Drag Orbit on Portrait Slot + Viewport Repulsion */
   window.addEventListener('pointermove', function (e) {
+    state.ptrClientX = e.clientX;
+    state.ptrClientY = e.clientY;
     state.ptrX = (e.clientX / window.innerWidth) * 2 - 1;
     state.ptrY = 1 - (e.clientY / window.innerHeight) * 2;
     state.ptrActive = 1;
@@ -342,7 +349,36 @@
     var cy = 1 - ((rect.top + rect.height * 0.5) / vh) * 2;
     var hw = rect.width / vw;
     var hh = rect.height / vh;
-    var cellPx = (rect.height / (data.rows || 240)) * dpr;
+    var cellPx = (rect.height / (data.rows || 335)) * dpr;
+
+    // Seamless Retina-to-Particle Hybrid:
+    // Crystal-clear studio portrait at rest; hovering opens a live 3D particle window;
+    // load assembly, drag-orbit, click ripple, and rapid scroll dissolve smoothly into pure 3D molecules.
+    if (photoEl && state.mode === 'dots') {
+      var isDisturbed = state.dragging || state.assemble < 0.96 || state.ripT < 1.35 || state.scrollEnergy > 0.14 || Math.abs(state.rotY) > 0.22;
+      var targetAlpha = isDisturbed ? 0 : 1;
+      state.photoAlpha += (targetAlpha - state.photoAlpha) * Math.min(1, dt * 8.5);
+      photoEl.style.setProperty('--photo-alpha', state.photoAlpha.toFixed(3));
+      var deg = (state.rotY * 180 / Math.PI) * 0.55;
+      photoEl.style.transform = 'perspective(1200px) rotateY(' + deg.toFixed(2) + 'deg)';
+
+      var relX = state.ptrClientX - rect.left;
+      var relY = state.ptrClientY - rect.top;
+      var overSlot = state.ptrActive > 0 && relX > -80 && relX < rect.width + 80 && relY > -80 && relY < rect.height + 80;
+      var targetR = overSlot ? 62 : 0;
+      state.maskR += (targetR - state.maskR) * Math.min(1, dt * 11.0);
+      if (state.maskR > 0.5) {
+        photoEl.style.setProperty('--mask-x', relX.toFixed(1) + 'px');
+        photoEl.style.setProperty('--mask-y', relY.toFixed(1) + 'px');
+        photoEl.style.setProperty('--mask-r', state.maskR.toFixed(1) + 'px');
+      } else {
+        photoEl.style.setProperty('--mask-x', '-300px');
+        photoEl.style.setProperty('--mask-y', '-300px');
+        photoEl.style.setProperty('--mask-r', '0px');
+      }
+    } else if (photoEl) {
+      photoEl.style.transform = '';
+    }
 
     // Fade portrait particles smoothly as hero scrolls out, while keeping ambient wall active
     var onScreen = rect.bottom > -80 && rect.top < vh + 80;
