@@ -1,11 +1,11 @@
 /* ==========================================================================
-   3D Particle Portrait + Cinematic Flickering Light Reveal + Ambient Field
+   3D Particle Portrait + Holographic Emerald Scan Materialization
    WebGL2 with seamless Canvas2D fallback:
-   1. 0.0s - 1.25s: 59,460 particles assemble from void in moody dark shadow
-   2. 1.25s - 4.00s: Suspenseful Halloween/thriller light on/off pulses
-      (strictly <= 1.5 pulses/sec, WCAG 2.3.1 compliant)
-   3. 4.00s+: Full face reveal locked into razor-sharp Retina cutout with
-      0.0px coordinate alignment & hover-clipped 3D emerald particles (zero ghost shadow)
+   1. 0.00s - 1.15s: Magnetic orbital vortex assembly of 59,460 particles
+   2. 0.85s - 1.95s: Biometric emerald laser sweep top-to-bottom locking
+      glowing 3D particles directly into ultra-HD Retina clarity
+   3. 2.00s+: Crisp studio portrait (0.0px alignment, zero ghost shadow) with
+      interactive hover particle window, click ripples, and drag-to-orbit
    ========================================================================== */
 (function () {
   'use strict';
@@ -14,7 +14,7 @@
   var canvas = document.getElementById('portrait-canvas');
   var slot = document.querySelector('[data-portrait-slot]');
   var photoEl = slot ? slot.querySelector('.portrait-fallback') : null;
-  var flickerGlowEl = slot ? slot.querySelector('[data-flicker-glow]') : null;
+  var scanLineEl = slot ? slot.querySelector('[data-scan-line]') : null;
   var modeBtns = Array.prototype.slice.call(document.querySelectorAll('[data-portrait-mode]'));
   var pauseBtn = document.querySelector('[data-portrait-pause]');
   var replayBtn = document.querySelector('[data-portrait-replay]');
@@ -53,55 +53,13 @@
     ripX: 0,
     ripY: 0,
     ripT: 10,
-    introT: reduced ? 10 : 0, // 0..4.2s cinematic arrival sequence
+    introT: reduced ? 10 : 0, // 0..2.1s Vortex Assembly + Emerald Scan Sweep
     assemble: reduced ? 1 : 0,
-    light: reduced ? 1 : 0.08,
     scrollEnergy: 0,
     lastScroll: window.scrollY,
     photoAlpha: reduced ? 1 : 0,
     maskR: 0
   };
-
-  /* Suspenseful cinema light on/off curve (1.25s..4.0s, <= 1.5 pulses/sec WCAG 2.3.1 safe) */
-  function computeIntroLight(t) {
-    if (t >= 4.25) return 1.0;
-    if (t < 1.25) {
-      // Shrouded in dark moody shadow while particles assemble
-      return 0.07 + 0.04 * (t / 1.25);
-    }
-    if (t < 1.62) {
-      // Pulse 1: eerie dim glimpse ON then dark OFF
-      var p1 = (t - 1.25) / 0.37;
-      return 0.08 + Math.sin(p1 * Math.PI) * 0.56;
-    }
-    if (t < 1.98) {
-      // Dark tension beat
-      return 0.06;
-    }
-    if (t < 2.34) {
-      // Pulse 2: sharper electric flicker ON then pitch dark
-      var p2 = (t - 1.98) / 0.36;
-      return 0.06 + Math.sin(p2 * Math.PI) * 0.78;
-    }
-    if (t < 2.72) {
-      // Deep dark pause before climax
-      return 0.05;
-    }
-    if (t < 3.24) {
-      // Pulse 3: suspenseful warm-emerald swell ON, dips back dark
-      var p3 = (t - 2.72) / 0.52;
-      return 0.08 + Math.sin(p3 * Math.PI) * 0.84;
-    }
-    if (t < 3.60) {
-      // Final blackout beat right before the big reveal
-      return 0.07;
-    }
-    // 3.60s -> 4.25s: Full power-up surge & smooth reveal lock to 1.0
-    var p4 = Math.min(1, (t - 3.60) / 0.55);
-    var easeOut = 1 - Math.pow(1 - p4, 3);
-    var surge = Math.sin(p4 * Math.PI) * 0.16;
-    return Math.min(1.14, 0.08 + easeOut * 0.92 + surge);
-  }
 
   function applyModeClasses() {
     root.classList.toggle('portrait-mode-dots', state.mode === 'dots');
@@ -135,7 +93,6 @@
       state.introT = 0;
       state.assemble = 0;
       state.photoAlpha = 0;
-      state.light = 0.07;
       state.maskR = 0;
       applyModeClasses();
     });
@@ -151,7 +108,6 @@
     };
   }
 
-  /* Compute exact rendered image box inside .portrait-slot (object-fit: contain; object-position: center bottom) */
   function getExactImageBox(slotRect) {
     var sw = slotRect.width || 1;
     var sh = slotRect.height || 1;
@@ -165,11 +121,10 @@
       drawH = sw / IMG_ASPECT;
     }
     var drawLeft = slotRect.left + (sw - drawW) * 0.5;
-    var drawTop = slotRect.top + (sh - drawH); // object-position: center bottom
+    var drawTop = slotRect.top + (sh - drawH);
     return { left: drawLeft, top: drawTop, width: drawW, height: drawH };
   }
 
-  /* Pointer & Drag Orbit on Portrait Slot + Viewport Repulsion */
   window.addEventListener('pointermove', function (e) {
     state.ptrClientX = e.clientX;
     state.ptrClientY = e.clientY;
@@ -212,7 +167,6 @@
     state.ripT = 0;
   });
 
-  /* Build interleaved buffers for portrait + ambient background wall */
   var positions = new Float32Array(totalCount * 3);
   var colors = new Float32Array(totalCount * 4);
   var seeds = new Float32Array(totalCount);
@@ -265,7 +219,8 @@
     'uniform vec3 uPtr;\n' +        // ptrX_ndc, ptrY_ndc, active
     'uniform vec3 uRip;\n' +        // ripX_ndc, ripY_ndc, ripT
     'uniform vec4 uHoverClip;\n' +  // maskX_ndc, maskY_ndc, maskR_ndc_y, photoAlpha
-    'uniform float uTime, uAssemble, uEnergy, uAspect, uDataAspect, uCellPx, uDpr, uFade, uLight;\n' +
+    'uniform vec2 uScan;\n' +       // scanY (-1.2..1.2 in local Y), scanActive (0..1)
+    'uniform float uTime, uAssemble, uEnergy, uAspect, uDataAspect, uCellPx, uDpr, uFade;\n' +
     'out vec4 vCol;\n' +
     'out float vWall;\n' +
     'void main() {\n' +
@@ -284,16 +239,21 @@
     '    return;\n' +
     '  }\n' +
     '  vec3 p = aPos;\n' +
-    '  float ease = 1.0 - pow(1.0 - uAssemble, 3.0);\n' +
-    '  float scatter = (1.0 - ease) * (1.1 + aSeed * 1.4);\n' +
-    '  float ang = aSeed * 6.28318 + (1.0 - ease) * 3.2;\n' +
-    '  p.x += cos(ang) * scatter * 0.55;\n' +
-    '  p.y += sin(ang) * scatter * 0.42;\n' +
-    '  p.z += (aSeed - 0.5) * (scatter + uEnergy * 0.24);\n' +
-    '  // Subtle cohesive breathing only when particles are full-frame (zero drift under photo)\n' +
+    '  // Magnetic orbital vortex assembly (smooth spiral convergence into exact likeness)\n' +
+    '  float ease = 1.0 - pow(1.0 - uAssemble, 3.5);\n' +
+    '  float rem = 1.0 - ease;\n' +
+    '  float swirlAng = rem * (2.6 + aSeed * 2.2);\n' +
+    '  float cs = cos(swirlAng), sn = sin(swirlAng);\n' +
+    '  vec2 spun = vec2(p.x * cs - p.y * sn, p.x * sn + p.y * cs);\n' +
+    '  p.xy = mix(p.xy, spun * (1.0 + rem * (0.55 + aSeed * 0.55)), rem);\n' +
+    '  p.z += (aSeed - 0.5) * (rem * 1.4 + uEnergy * 0.24);\n' +
+    '  // Holographic laser scan crest: subtle forward pulse right as the emerald beam passes\n' +
+    '  float scanDist = abs(aPos.y - uScan.x);\n' +
+    '  float scanBand = uScan.y * exp(-pow(scanDist * 14.0, 2.0));\n' +
+    '  p.z += scanBand * 0.045;\n' +
+    '  // Subtle cohesive breathing only when full cloud is active\n' +
     '  float fullCloud = 1.0 - uHoverClip.w;\n' +
-    '  p.y += sin(uTime * 1.25 + p.x * 1.8) * 0.0022 * fullCloud;\n' +
-    '  p.z += cos(uTime * 0.95 + p.y * 1.6) * 0.003 * fullCloud;\n' +
+    '  p.y += sin(uTime * 1.25 + p.x * 1.8) * 0.002 * fullCloud;\n' +
     '  // Natural 3D Y-axis rotation\n' +
     '  vec3 r;\n' +
     '  r.x = p.x * uRot.x + p.z * uRot.y;\n' +
@@ -303,11 +263,12 @@
     '  vec2 ndc;\n' +
     '  ndc.x = uSlot.x + (r.x / uDataAspect) * uSlot.z * persp;\n' +
     '  ndc.y = uSlot.y + r.y * uSlot.w * persp;\n' +
-    '  // Zero-ghosting clip: when Retina photo is visible, ONLY draw particles inside the cursor window\n' +
+    '  // Zero-ghosting clip: during scan, hide particles above beam; at rest, clip strictly to hover window\n' +
+    '  float belowScan = mix(1.0, smoothstep(uScan.x + 0.05, uScan.x - 0.04, aPos.y), uScan.y);\n' +
     '  vec2 dClip = vec2((ndc.x - uHoverClip.x) * uAspect, ndc.y - uHoverClip.y);\n' +
     '  float distClip = length(dClip);\n' +
     '  float insideWindow = uHoverClip.z > 0.001 ? smoothstep(uHoverClip.z + 0.10, uHoverClip.z * 0.72, distClip) : 0.0;\n' +
-    '  float clipAlpha = mix(1.0, insideWindow, uHoverClip.w);\n' +
+    '  float clipAlpha = uScan.y > 0.01 ? belowScan : mix(1.0, insideWindow, uHoverClip.w);\n' +
     '  // Cursor parting + signal-emerald rim boost\n' +
     '  vec2 dPtr = vec2((ndc.x - uPtr.x) * uAspect, ndc.y - uPtr.y);\n' +
     '  float distPtr = length(dPtr);\n' +
@@ -321,14 +282,14 @@
     '  float rip = exp(-pow((distRip - waveR) * 14.0, 2.0)) * exp(-uRip.z * 2.1);\n' +
     '  ndc += (distRip > 0.001 ? dRip / distRip : vec2(0.0)) * rip * 0.028;\n' +
     '  gl_Position = vec4(ndc, clamp(0.2 - r.z * 0.4, -0.95, 0.95), 1.0);\n' +
-    '  float disturb = clamp(part + rip + (1.0 - ease) + uEnergy * 0.5, 0.0, 1.0);\n' +
-    '  float ptSize = uCellPx * mix(1.52, 1.05, disturb) + rip * 1.4 * uDpr;\n' +
-    '  gl_PointSize = max(1.6 * uDpr, ptSize);\n' +
-    '  // Thriller/Halloween eerie emerald lighting during 0..4s intro flicker, full color at uLight=1\n' +
-    '  float rimFactor = clamp(1.0 - abs(aPos.z) * 7.5, 0.0, 1.0);\n' +
-    '  vec3 eerieShade = aCol.rgb * uLight + vec3(0.04, 0.42, 0.28) * (1.0 - min(1.0, uLight)) * rimFactor * 0.35;\n' +
-    '  vec3 tint = mix(eerieShade, vec3(0.20, 0.85, 0.60), part * 0.58 + rip * 0.42);\n' +
-    '  vCol = vec4(tint, aCol.a * uFade * clipAlpha * (0.92 + 0.08 * ease));\n' +
+    '  float disturb = clamp(part + rip + rem + uEnergy * 0.5, 0.0, 1.0);\n' +
+    '  float ptSize = uCellPx * mix(1.48, 1.02, disturb) + (rip + scanBand) * 1.45 * uDpr;\n' +
+    '  gl_PointSize = max(1.5 * uDpr, ptSize);\n' +
+    '  // Holographic emerald shimmer during assembly & right along the scan beam\n' +
+    '  vec3 baseCol = mix(aCol.rgb, vec3(0.18, 0.88, 0.62), rem * 0.55);\n' +
+    '  vec3 scannedCol = mix(baseCol, vec3(0.38, 0.98, 0.78), scanBand * 0.82);\n' +
+    '  vec3 tint = mix(scannedCol, vec3(0.20, 0.85, 0.60), part * 0.58 + rip * 0.42);\n' +
+    '  vCol = vec4(tint, aCol.a * uFade * max(clipAlpha, scanBand) * (0.85 + 0.15 * ease));\n' +
     '  vWall = 0.0;\n' +
     '}\n';
 
@@ -393,6 +354,7 @@
   var uPtr = gl.getUniformLocation(prog, 'uPtr');
   var uRip = gl.getUniformLocation(prog, 'uRip');
   var uHoverClip = gl.getUniformLocation(prog, 'uHoverClip');
+  var uScan = gl.getUniformLocation(prog, 'uScan');
   var uTime = gl.getUniformLocation(prog, 'uTime');
   var uAssemble = gl.getUniformLocation(prog, 'uAssemble');
   var uEnergy = gl.getUniformLocation(prog, 'uEnergy');
@@ -401,7 +363,6 @@
   var uCellPx = gl.getUniformLocation(prog, 'uCellPx');
   var uDpr = gl.getUniformLocation(prog, 'uDpr');
   var uFade = gl.getUniformLocation(prog, 'uFade');
-  var uLight = gl.getUniformLocation(prog, 'uLight');
 
   gl.enable(gl.BLEND);
   gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
@@ -429,8 +390,7 @@
 
     if (!state.paused) {
       state.introT = Math.min(10, state.introT + dt);
-      state.assemble = Math.min(1, state.introT / 1.25);
-      state.light = computeIntroLight(state.introT);
+      state.assemble = Math.min(1, state.introT / 1.12);
       state.ripT = Math.min(10, state.ripT + dt * 1.15);
 
       var scrollDelta = Math.abs(window.scrollY - state.lastScroll);
@@ -441,7 +401,6 @@
         state.userRot *= Math.pow(0.18, dt);
       }
       var scrollRot = Math.sin(window.scrollY * 0.0018) * 0.14;
-      // Only tilt via scroll/drag when photo is dissolved so zero offset occurs under resting photo
       var rotBlend = 1.0 - state.photoAlpha;
       state.rotY = (scrollRot + state.userRot) * rotBlend + state.userRot * state.photoAlpha;
     }
@@ -449,26 +408,40 @@
     var cRect = canvas.getBoundingClientRect();
     var vw = cRect.width || 1;
     var vh = cRect.height || 1;
-    // Keep canvas buffer synced if scrollbar state changes
     var expectedW = Math.max(1, Math.round(vw * dpr));
     if (Math.abs(canvas.width - expectedW) > 2) resize();
 
     var slotRect = slot.getBoundingClientRect();
     var imgBox = getExactImageBox(slotRect);
 
-    // 0.0px-aligned NDC mapping matching the exact rendered photo box
     var cx = ((imgBox.left + imgBox.width * 0.5 - cRect.left) / vw) * 2 - 1;
     var cy = 1 - ((imgBox.top + imgBox.height * 0.5 - cRect.top) / vh) * 2;
     var hw = imgBox.width / vw;
     var hh = imgBox.height / vh;
     var cellPx = (imgBox.height / (data.rows || 335)) * dpr;
 
-    // Update dramatic flicker spotlight aura during 1.25s..4.2s intro
-    if (flickerGlowEl) {
-      var glowAlpha = state.introT < 4.35
-        ? Math.max(0, (state.light - 0.12) * 0.95)
-        : 0.18;
-      flickerGlowEl.style.setProperty('--flicker-glow', glowAlpha.toFixed(3));
+    // Holographic Emerald Scan Beam (0.85s -> 1.98s): sweeps smoothly top (+1) to bottom (-1)
+    var scanStart = 0.85;
+    var scanDur = 1.12;
+    var rawScan = (state.introT - scanStart) / scanDur;
+    var isScanning = state.mode === 'dots' && state.introT >= scanStart && rawScan <= 1.05;
+    var scanProgress = Math.max(0, Math.min(1, rawScan));
+    // Smooth ease-in-out sweep
+    var scanEase = scanProgress < 0.5
+      ? 2 * scanProgress * scanProgress
+      : 1 - Math.pow(-2 * scanProgress + 2, 2) / 2;
+
+    var scanY = 1.05 - scanEase * 2.1; // +1.05 (top) -> -1.05 (bottom)
+    var scanActive = isScanning ? Math.sin(Math.min(1, scanProgress) * Math.PI) : 0;
+
+    if (scanLineEl) {
+      if (isScanning && scanActive > 0.01) {
+        var topOffsetPct = ((imgBox.top - slotRect.top) + scanEase * imgBox.height) / Math.max(1, slotRect.height) * 100;
+        scanLineEl.style.setProperty('--scan-pct', topOffsetPct.toFixed(2) + '%');
+        scanLineEl.style.setProperty('--scan-alpha', Math.min(1, scanActive * 1.35).toFixed(3));
+      } else {
+        scanLineEl.style.setProperty('--scan-alpha', '0');
+      }
     }
 
     var maskX_ndc = -9;
@@ -476,17 +449,26 @@
     var maskR_ndc = 0;
 
     if (photoEl && state.mode === 'dots') {
-      // Keep pure 3D particle cloud during 0..3.85s arrival + light flicker, click ripples, drag, or rapid scroll
-      var isIntro = state.introT < 3.85;
-      var isDisturbed = isIntro || state.dragging || state.ripT < 1.35 || state.scrollEnergy > 0.14 || Math.abs(state.userRot) > 0.04;
-      var targetAlpha = isDisturbed ? 0 : 1;
-      state.photoAlpha += (targetAlpha - state.photoAlpha) * Math.min(1, dt * 8.5);
+      var preScan = state.introT < scanStart;
+      var isDisturbed = state.dragging || state.ripT < 1.35 || state.scrollEnergy > 0.14 || Math.abs(state.userRot) > 0.04;
+
+      if (preScan) {
+        state.photoAlpha = 0;
+        photoEl.style.setProperty('--scan-bottom', '100%');
+      } else if (isScanning && !isDisturbed) {
+        state.photoAlpha = 1;
+        photoEl.style.setProperty('--scan-bottom', ((1 - scanEase) * 100).toFixed(2) + '%');
+      } else {
+        photoEl.style.setProperty('--scan-bottom', '0%');
+        var targetAlpha = isDisturbed ? 0 : 1;
+        state.photoAlpha += (targetAlpha - state.photoAlpha) * Math.min(1, dt * 8.5);
+      }
+
       photoEl.style.setProperty('--photo-alpha', state.photoAlpha.toFixed(3));
-      photoEl.style.setProperty('--photo-bright', Math.max(0.08, Math.min(1.12, state.light)).toFixed(3));
 
       var relX = state.ptrClientX - slotRect.left;
       var relY = state.ptrClientY - slotRect.top;
-      var overImg = state.ptrActive > 0 && state.introT >= 3.85 &&
+      var overImg = state.ptrActive > 0 && state.introT >= scanStart + scanDur &&
         state.ptrClientX > imgBox.left - 40 && state.ptrClientX < imgBox.left + imgBox.width + 40 &&
         state.ptrClientY > imgBox.top - 40 && state.ptrClientY < imgBox.top + imgBox.height + 40;
       var targetR = overImg ? 64 : 0;
@@ -507,7 +489,9 @@
     }
 
     var onScreen = slotRect.bottom > -80 && slotRect.top < vh + 80;
-    var needParticles = Math.min(1.0, Math.max(1.0 - state.photoAlpha, state.maskR / 24.0));
+    var needParticles = isScanning
+      ? 1.0
+      : Math.min(1.0, Math.max(1.0 - state.photoAlpha, state.maskR / 24.0));
     var portraitFade = state.mode === 'dots' && onScreen ? needParticles : 0.0;
 
     gl.clearColor(0, 0, 0, 0);
@@ -520,6 +504,7 @@
     gl.uniform3f(uPtr, state.ptrX, state.ptrY, state.ptrActive);
     gl.uniform3f(uRip, state.ripX, state.ripY, state.ripT);
     gl.uniform4f(uHoverClip, maskX_ndc, maskY_ndc, maskR_ndc, state.photoAlpha);
+    gl.uniform2f(uScan, scanY, isScanning ? 1.0 : 0.0);
     gl.uniform1f(uTime, now * 0.001);
     gl.uniform1f(uAssemble, state.assemble);
     gl.uniform1f(uEnergy, state.scrollEnergy);
@@ -528,7 +513,6 @@
     gl.uniform1f(uCellPx, cellPx);
     gl.uniform1f(uDpr, dpr);
     gl.uniform1f(uFade, portraitFade);
-    gl.uniform1f(uLight, state.light);
 
     gl.drawArrays(gl.POINTS, 0, totalCount);
     requestAnimationFrame(frame);
@@ -558,13 +542,11 @@
       var w = canvas.width, h = canvas.height;
       ctx.clearRect(0, 0, w, h);
       var t = now * 0.001;
-      if (!state.paused) {
-        state.introT = Math.min(10, state.introT + dt);
-        state.light = computeIntroLight(state.introT);
-      }
+      if (!state.paused) state.introT = Math.min(10, state.introT + dt);
       if (photoEl && state.mode === 'dots') {
+        var prog2d = Math.max(0, Math.min(1, state.introT / 1.4));
         photoEl.style.setProperty('--photo-alpha', '1');
-        photoEl.style.setProperty('--photo-bright', Math.max(0.08, Math.min(1.12, state.light)).toFixed(3));
+        photoEl.style.setProperty('--scan-bottom', ((1 - prog2d) * 100).toFixed(1) + '%');
       }
       for (var j = portraitCount; j < totalCount; j += 3) {
         var wx = ((positions[j * 3] + 1) * 0.5) * w;

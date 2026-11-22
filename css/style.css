@@ -576,16 +576,20 @@ button {
   z-index: 0;
 }
 
-.portrait-flicker-glow {
+.portrait-scan-line {
   position: absolute;
-  inset: -6% -4% 12%;
-  border-radius: 50%;
-  background: radial-gradient(ellipse 62% 58% at 50% 34%, rgba(52, 211, 153, 0.34) 0%, rgba(16, 185, 129, 0.14) 38%, transparent 72%);
-  filter: blur(26px);
+  left: 6%;
+  right: 6%;
+  top: var(--scan-pct, 0%);
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent 0%, rgba(16, 185, 129, 0.55) 18%, #34d399 42%, #eef7f2 50%, #34d399 58%, rgba(16, 185, 129, 0.55) 82%, transparent 100%);
+  box-shadow: 0 0 18px 3px rgba(16, 185, 129, 0.72), 0 0 42px 8px rgba(52, 211, 153, 0.28);
   pointer-events: none;
-  z-index: 1;
-  opacity: var(--flicker-glow, 0);
-  transition: opacity 0.08s linear;
+  z-index: 4;
+  opacity: var(--scan-alpha, 0);
+  transform: translateY(-50%);
+  will-change: top, opacity;
 }
 
 .portrait-fallback {
@@ -595,17 +599,17 @@ button {
   object-fit: contain;
   object-position: center bottom;
   z-index: 2;
-  transition: opacity 0.28s ease;
+  transition: opacity 0.24s ease;
   user-select: none;
   -webkit-user-drag: none;
-  will-change: opacity, filter;
+  will-change: opacity, clip-path;
 }
 
 /* In 3D mode: seamless Retina photo-to-particle hybrid driven by JS variables
-   (zero second shadow: WebGL2 particles clip strictly inside the hover circle when photo is visible) */
+   (zero second shadow: WebGL2 particles clip strictly inside the hover circle or below the scan beam) */
 .is-3d.portrait-mode-dots .portrait-fallback {
   opacity: var(--photo-alpha, 0);
-  filter: brightness(var(--photo-bright, 1));
+  clip-path: inset(0 0 var(--scan-bottom, 0%) 0);
   pointer-events: none;
   -webkit-mask-image: radial-gradient(circle at var(--mask-x, -300px) var(--mask-y, -300px), transparent 0px, transparent var(--mask-r, 0px), rgba(0, 0, 0, 0.45) calc(var(--mask-r, 0px) + 34px), #000 calc(var(--mask-r, 0px) + 74px));
   mask-image: radial-gradient(circle at var(--mask-x, -300px) var(--mask-y, -300px), transparent 0px, transparent var(--mask-r, 0px), rgba(0, 0, 0, 0.45) calc(var(--mask-r, 0px) + 34px), #000 calc(var(--mask-r, 0px) + 74px));
@@ -613,7 +617,7 @@ button {
 
 .is-3d.portrait-mode-photo .portrait-fallback {
   opacity: 1;
-  filter: none;
+  clip-path: none;
   -webkit-mask-image: none;
   mask-image: none;
   transform: none;
