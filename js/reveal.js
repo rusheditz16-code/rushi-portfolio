@@ -15,22 +15,28 @@
     if (!el) return;
     var parent = el.parentElement;
     var page = document.querySelector('.page');
-    var padX = parseFloat(getComputedStyle(page).paddingLeft) * 2 || 40;
-    var target = Math.max(260, page.getBoundingClientRect().width - padX);
+    var padX = parseFloat(getComputedStyle(page).paddingLeft) * 2 || 28;
+    var target = Math.max(220, page.getBoundingClientRect().width - padX);
     parent.style.fontSize = '';
     var currentSize = parseFloat(getComputedStyle(parent).fontSize);
     var measuredWidth = el.getBoundingClientRect().width;
     if (measuredWidth > 0) {
       var nextSize = currentSize * (target / measuredWidth);
-      parent.style.fontSize = Math.min(265, Math.max(48, nextSize)).toFixed(2) + 'px';
+      parent.style.fontSize = Math.min(188, Math.max(36, nextSize)).toFixed(2) + 'px';
     }
+  }
+
+  var resizeTimer = null;
+  function onResize() {
+    if (resizeTimer) cancelAnimationFrame(resizeTimer);
+    resizeTimer = requestAnimationFrame(fitTitle);
   }
 
   fitTitle();
   if (document.fonts && document.fonts.ready) {
     document.fonts.ready.then(fitTitle);
   }
-  window.addEventListener('resize', fitTitle);
+  window.addEventListener('resize', onResize, { passive: true });
 
   if (!rv || calm) {
     root.classList.add('rv-all');
@@ -51,7 +57,12 @@
     var frag = document.createDocumentFragment();
     var idx = 0;
 
-    node.setAttribute('aria-label', node.textContent.replace(/\s+/g, ' ').trim());
+    var labelText = lines.map(function (lineHtml) {
+      var tmp = document.createElement('span');
+      tmp.innerHTML = lineHtml;
+      return tmp.textContent.replace(/\s+/g, ' ').trim();
+    }).filter(Boolean).join(' ');
+    node.setAttribute('aria-label', labelText);
 
     lines.forEach(function (lineHtml, li) {
       var tmp = document.createElement('span');

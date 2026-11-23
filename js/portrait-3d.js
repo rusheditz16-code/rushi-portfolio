@@ -72,10 +72,13 @@
     }
   }
 
+  var scheduleRender = function () {};
+
   modeBtns.forEach(function (btn) {
     btn.addEventListener('click', function () {
       state.mode = state.mode === 'dots' ? 'photo' : 'dots';
       applyModeClasses();
+      scheduleRender();
     });
   });
 
@@ -83,6 +86,7 @@
     pauseBtn.addEventListener('click', function () {
       state.paused = !state.paused;
       applyModeClasses();
+      scheduleRender();
     });
   }
 
@@ -95,6 +99,7 @@
       state.photoAlpha = 0;
       state.maskR = 0;
       applyModeClasses();
+      scheduleRender();
     });
   }
 
@@ -381,7 +386,6 @@
     gl.viewport(0, 0, canvas.width, canvas.height);
   }
   resize();
-  window.addEventListener('resize', resize);
 
   var prevT = performance.now();
   function frame(now) {
@@ -514,10 +518,45 @@
     gl.uniform1f(uDpr, dpr);
     gl.uniform1f(uFade, portraitFade);
 
-    gl.drawArrays(gl.POINTS, 0, totalCount);
-    requestAnimationFrame(frame);
+    // Performance: skip 59,460 portrait vertices whenever portrait is settled/offscreen
+    if (portraitFade > 0.001) {
+      gl.drawArrays(gl.POINTS, 0, totalCount);
+    } else {
+      gl.drawArrays(gl.POINTS, portraitCount, wallCount);
+    }
+
+    rafId = 0;
+    if (!state.paused && !document.hidden) {
+      rafId = requestAnimationFrame(frame);
+    }
   }
-  requestAnimationFrame(frame);
+
+  var rafId = 0;
+  scheduleRender = function () {
+    if (document.hidden) return;
+    if (!rafId) {
+      prevT = performance.now();
+      rafId = requestAnimationFrame(frame);
+    }
+  };
+
+  document.addEventListener('visibilitychange', function () {
+    if (document.hidden) {
+      if (rafId) {
+        cancelAnimationFrame(rafId);
+        rafId = 0;
+      }
+    } else {
+      scheduleRender();
+    }
+  });
+
+  window.addEventListener('resize', function () {
+    resize();
+    scheduleRender();
+  }, { passive: true });
+
+  scheduleRender();
 
   /* Canvas2D fallback if WebGL2 fails */
   function initCanvas2DFallback() {
@@ -533,8 +572,8 @@
       canvas.height = Math.max(1, Math.round((cRect.height || window.innerHeight) * dpr));
     }
     resize2D();
-    window.addEventListener('resize', resize2D);
 
+    var raf2D = 0;
     var prev2D = performance.now();
     function draw2D(now) {
       var dt = Math.min(0.05, (now - prev2D) / 1000);
@@ -554,8 +593,32 @@
         ctx.fillStyle = 'rgba(16, 185, 129, 0.28)';
         ctx.fillRect(wx, wy, 2 * dpr, 2 * dpr);
       }
-      requestAnimationFrame(draw2D);
+      raf2D = 0;
+      if (!state.paused && !document.hidden) {
+        raf2D = requestAnimationFrame(draw2D);
+      }
     }
-    requestAnimationFrame(draw2D);
+
+    scheduleRender = function () {
+      if (document.hidden) return;
+      if (!raf2D) {
+        prev2D = performance.now();
+        raf2D = requestAnimationFrame(draw2D);
+      }
+    };
+
+    window.addEventListener('resize', function () {
+      resize2D();
+      scheduleRender();
+    }, { passive: true });
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden && raf2D) {
+        cancelAnimationFrame(raf2D);
+        raf2D = 0;
+      } else if (!document.hidden) {
+        scheduleRender();
+      }
+    });
+    scheduleRender();
   }
 })();

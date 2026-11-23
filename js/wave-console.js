@@ -1,7 +1,8 @@
 /* ==========================================================================
    K.A.I.R.O.S. Signal Wave Canvas + Interactive Mini-Console
-   Perspective 3D particle wave field in Obsidian & Solar Amber, plus optional
-   user-triggered Web Audio harmonic pulse & live portfolio CLI queries.
+   Perspective 3D particle wave field in Carbon Noir & Signal Emerald, plus
+   optional user-triggered Web Audio harmonic pulse & portfolio CLI queries.
+   Viewport-gated via IntersectionObserver so zero CPU runs while offscreen.
    ========================================================================== */
 (function () {
   'use strict';
@@ -20,9 +21,14 @@
 
   var state = {
     paused: reduced,
+    inView: false,
     pulseEnergy: 0,
     audioOn: false
   };
+
+  if (wavePauseBtn && state.paused) {
+    wavePauseBtn.textContent = 'Resume Wave';
+  }
 
   /* ---------- Optional Opt-In Web Audio Ambient Synth ---------- */
   var audioCtx = null;
@@ -82,12 +88,14 @@
     wavePauseBtn.addEventListener('click', function () {
       state.paused = !state.paused;
       wavePauseBtn.textContent = state.paused ? 'Resume Wave' : 'Pause Wave';
+      scheduleWave();
     });
   }
 
   /* ---------- Perspective 3D Dot Wave Field ---------- */
   var COLS = 52;
   var ROWS = 22;
+  var waveRaf = 0;
 
   function resizeCanvas() {
     if (!canvas || !ctx) return;
@@ -97,10 +105,8 @@
     canvas.height = Math.max(1, Math.floor(rect.height * dpr));
   }
 
-  resizeCanvas();
-  window.addEventListener('resize', resizeCanvas);
-
   function renderWave(now) {
+    waveRaf = 0;
     if (!canvas || !ctx) return;
     var w = canvas.width;
     var h = canvas.height;
@@ -155,18 +161,61 @@
       }
     }
 
-    requestAnimationFrame(renderWave);
+    if (!state.paused && state.inView && !document.hidden) {
+      waveRaf = requestAnimationFrame(renderWave);
+    }
   }
-  requestAnimationFrame(renderWave);
+
+  function scheduleWave() {
+    if (document.hidden) return;
+    if (!waveRaf) {
+      waveRaf = requestAnimationFrame(renderWave);
+    }
+  }
+
+  resizeCanvas();
+  window.addEventListener('resize', function () {
+    resizeCanvas();
+    scheduleWave();
+  }, { passive: true });
+
+  if ('IntersectionObserver' in window) {
+    var waveObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        state.inView = entry.isIntersecting;
+        if (state.inView) {
+          resizeCanvas();
+          scheduleWave();
+        } else if (waveRaf) {
+          cancelAnimationFrame(waveRaf);
+          waveRaf = 0;
+        }
+      });
+    }, { rootMargin: '120px 0px' });
+    waveObserver.observe(stage);
+  } else {
+    state.inView = true;
+    scheduleWave();
+  }
+
+  document.addEventListener('visibilitychange', function () {
+    if (document.hidden && waveRaf) {
+      cancelAnimationFrame(waveRaf);
+      waveRaf = 0;
+    } else if (!document.hidden && state.inView) {
+      scheduleWave();
+    }
+  });
 
   /* ---------- Interactive K.A.I.R.O.S. Console Responses ---------- */
   var COMMANDS = {
-    help: 'Commands: whoami · stack · projects · certs · education · contact · clear',
-    whoami: 'Rushi (Dabhi Rushiraj Jayeshbhai), 1st-year B.Tech CSE (AI & ML) student at Gyanmanjari Innovative University, Bhavnagar. Building web apps, civic tools, and desktop software.',
-    stack: 'Frontend: HTML5, CSS3, Vanilla JS, React 19, Next.js, TypeScript, Tailwind | Backend: Python, FastAPI, WebSockets, Groq Whisper, SQLite Vector RAG.',
-    projects: '1. K.A.I.R.O.S. (Windows Voice Assistant) | 2. Botad Cyber Rakshak AI | 3. JanRaksha ID | 4. KhojSetu | 5. AyurSwift. Click any card above for details.',
+    help: 'Commands: whoami · stack · projects · certs · education · resume · contact · clear',
+    whoami: 'Rushi (Dabhi Rushiraj Jayeshbhai), 1st-year B.Tech CSE (AI & ML) student at Gyanmanjari Innovative University, Bhavnagar. Building full-stack web apps, civic tools, and local AI software.',
+    stack: 'Languages: Python, JS, TS, HTML/CSS | Frontend: React 19, Next.js, Vite, Tailwind | Backend & AI: FastAPI, WebSockets, ReAct Agents, Groq Whisper v3 Turbo, SQLite Vector RAG.',
+    projects: '1. K.A.I.R.O.S. (Local Windows Voice Assistant) | 2. Botad Cyber Rakshak AI | 3. JanRaksha ID | 4. KhojSetu | 5. AyurSwift. Open any card above for the full case study.',
     certs: 'Oracle Agentic AI Certified (Valid 2028) · Deloitte Cyber Security Simulation · AWS Prompt Engineering · IBM AI Fundamentals · Google Cloud LLMs · ChaosCore Hackathon 2026.',
     education: 'B.Tech in Computer Science & Engineering (AI & ML), Gyanmanjari Innovative University, Bhavnagar (Class of 2030).',
+    resume: 'Resume PDF available at assets/docs/Rushiraj_Dabhi_Resume.pdf (click Download Resume in the top bar or Hero).',
     contact: 'Email: rushirajdabhi16@gmail.com | GitHub: github.com/rusheditz16-code | LinkedIn: linkedin.com/in/rushiraj-dabhi-a2204242b | IG: @rusheditz16'
   };
 
@@ -176,6 +225,7 @@
     if (!cmd) return;
 
     state.pulseEnergy = 1.0;
+    scheduleWave();
 
     if (cmd === 'clear') {
       output.innerHTML = '<div class="cmd-echo">&gt; Cleared. Type a command or click a button above.</div>';
@@ -185,11 +235,11 @@
     var reply = COMMANDS[cmd];
     if (!reply) {
       if (cmd.indexOf('kairos') !== -1) {
-        reply = 'K.A.I.R.O.S. v2.5: Local FastAPI + WebSocket desktop assistant with ~150ms Groq Whisper voice capture, 24/7 wake word, multi-model routing, and SQLite Vector RAG.';
+        reply = 'K.A.I.R.O.S.: Local FastAPI + multiplexed WebSocket desktop assistant with Groq Whisper speech transcription (~150ms), 24/7 wake word, complexity router with circuit breakers, and 3-tier SQLite memory.';
       } else if (cmd.indexOf('hello') !== -1 || cmd.indexOf('hi') !== -1) {
-        reply = 'Hey! Try whoami, stack, projects, certs, or contact.';
+        reply = 'Hey! Try whoami, stack, projects, certs, resume, or contact.';
       } else {
-        reply = 'Unknown command "' + cmd.replace(/[<>&]/g, '') + '". Try: whoami, stack, projects, certs, education, contact, or help.';
+        reply = 'Unknown command "' + cmd.replace(/[<>&]/g, '') + '". Try: whoami, stack, projects, certs, education, resume, contact, or help.';
       }
     }
 
